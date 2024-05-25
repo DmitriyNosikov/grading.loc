@@ -8,8 +8,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run build --workspaces",
+
     "start:backend": "npm run start --workspace backend",
-    "start:frontend": "npm run dev --workspace frontend"
+    "build:backend": "npm run build --workspace backend",
+
+    "start:frontend": "npm run dev --workspace frontend",
+    "build:frontend": "npm run build --workspace frontend"
   },
   "keywords": [],
   "author": "",
