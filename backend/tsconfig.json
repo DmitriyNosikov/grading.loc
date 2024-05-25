@@ -1,16 +1,17 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ES2021",
+    "target": "es2015",
+    "module": "commonjs",
     "moduleResolution": "node",
-    "module": "esnext",
     "lib": ["es2020", "dom"],
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": ".",
     "sourceMap": true,
 
     "declaration": true,
-    "incremental": true,
+    "incremental": false,
+    // "incremental": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,

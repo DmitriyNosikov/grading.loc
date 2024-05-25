@@ -7,6 +7,10 @@
     "sourceMap": true,
 
     // Modules
+    "target": "es2015",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": ["es2020", "dom"],
     "esModuleInterop": true,
     "resolveJsonModule": true,
 
