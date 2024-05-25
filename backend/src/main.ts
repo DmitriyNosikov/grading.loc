@@ -1,8 +1,9 @@
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { ConfigEnvironment } from './app/app.constant';
 import { AppModule } from './app/app.module';
+import { ConfigEnum } from './config/config.schema';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -18,17 +19,12 @@ async function bootstrap() {
     }),
   );
 
-  console.log('ENV: ', configService);
-  console.log('ENV2: ', process.env.HOST);
+  const host = configService.get(`${ConfigEnvironment.APP}.${ConfigEnum.HOST}`);
+  const port = configService.get(`${ConfigEnvironment.APP}.${ConfigEnum.PORT}`);
 
-  const host = configService.get(configService.get(`${ConfigEnvironment.APP}.host`));
-  const port = configService.get(configService.get('PORT'));
+  await app.listen(port, host);
 
-  console.log('HOST: ', host, ' PORT: ', port);
-
-  // await app.listen(port, host);
-
-  // Logger.log(`🚀 Application is running on: http://${host}:${port}/${globalPrefix}`);
+  Logger.log(`🚀 Application is running on: http://${host}:${port}/${globalPrefix}`);
 }
 
 bootstrap();

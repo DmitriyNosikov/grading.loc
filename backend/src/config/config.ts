@@ -13,6 +13,8 @@ async function getConfig(): Promise<ConfigInterface> {
     host: process.env.HOST,
   });
 
+  console.log('Мы тут');
+
   await config.validate();
 
   return config;
@@ -20,4 +22,4 @@ async function getConfig(): Promise<ConfigInterface> {
 
 export default registerAs(ConfigEnvironment.APP, async (): PromisifiedConfig => {
   return getConfig();
-})
+});
