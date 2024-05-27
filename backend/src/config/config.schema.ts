@@ -1,5 +1,5 @@
 import { IsNumber, IsOptional, IsString, Max, Min, ValidationError, validateOrReject } from 'class-validator';
-import { DEFAULT_PORT, MAX_PORT, MIN_PORT } from '../app/app.constant';
+import { DEFAULT_PORT, MAX_PORT, MIN_PORT } from './config.constant';
 
 export const ConfigEnum = {
   HOST: 'host',

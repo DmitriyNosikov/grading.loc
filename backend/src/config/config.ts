@@ -1,6 +1,6 @@
 import { ConfigType, registerAs } from '@nestjs/config';
 import { plainToClass } from 'class-transformer';
-import { ConfigEnvironment, DEFAULT_PORT } from '../app/app.constant';
+import { ConfigEnvironment, DEFAULT_PORT } from './config.constant';
 import { ConfigInterface, ConfigSchema } from './config.schema';
 
 type PromisifiedConfig = Promise<ConfigType<typeof getConfig>>;
@@ -12,8 +12,6 @@ async function getConfig(): Promise<ConfigInterface> {
     port: parseInt(port, 10),
     host: process.env.HOST,
   });
-
-  console.log('Мы тут');
 
   await config.validate();
 

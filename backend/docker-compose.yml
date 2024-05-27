@@ -1,0 +1,44 @@
+# Compose: docker compose --file=./backend/docker-compose.yml --project-name "grading-user" --env-file=./backend/.env up -d
+# Healthcheck: docker inspect readme.user.mongodb --format='{{.State.Health}}'
+version: '3.9'
+services:
+  grading.user.mongodb:
+    image: mongo:4.4
+    restart: always
+    container_name: grading.user.mongodb
+
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGODB}
+
+    # Forwarded MongoDB port / Virtual machine MongoDB port
+    ports:
+      - ${MONGODB_PORT}:27017
+
+    volumes:
+      - grading.mongodb.user:/data/db
+
+    healthcheck:
+      test: echo 'db.runCommand({ serverStatus:1 }).ok' | mongo admin -u ${MONGODB_USER} -p ${MONGODB_PASSWORD} --quiet | grep 1
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  grading.user.mongodb.ui:
+    image: mongo-express:1.0.2-20
+    restart: always
+    container_name: grading.user.mongodb.ui
+    ports:
+      - ${MONGODB_EXPRESS_PORT}:8081
+    depends_on:
+      - grading.user.mongodb
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGODB_USER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGODB_PASSWORD}
+      ME_CONFIG_BASICAUTH_USERNAME: ${MONGODB_USER}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${MONGODB_PASSWORD}
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@grading.user.mongodb:${MONGODB_PORT}/
+
+volumes:
+  grading.mongodb.user:

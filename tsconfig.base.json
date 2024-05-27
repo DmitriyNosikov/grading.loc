@@ -37,7 +37,8 @@
 
     /* Paths */
     "paths": {
-      "@shared/types": [ "shared/types/index.ts" ]
+      "@backend/libs/*": [ "backend/src/app/libs/*" ],
+      "@backend/config": [ "backend/src/config/index.ts" ],
     }
   },
   "exclude": ["node_modules"],

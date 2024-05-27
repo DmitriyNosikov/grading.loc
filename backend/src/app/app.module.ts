@@ -1,6 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { config } from '../config';
+import { MongooseModule } from '@nestjs/mongoose';
+
+import { ConfigEnvironment, appConfig, jwtConfig, mongoDBConfig } from '../config';
+
+import { getMongooseOptions } from './libs/helpers';
+
+import { UserModule } from './user/user.module';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -10,10 +17,16 @@ import { AppService } from './app.service';
       isGlobal: true,
       cache: true,
       // Cписок конфигураций для загрузки
-      load: [config],
+      load: [appConfig, mongoDBConfig, jwtConfig],
 
       envFilePath: '.env',
     }),
+
+    MongooseModule.forRootAsync(
+      getMongooseOptions(ConfigEnvironment.MONGODB)
+    ),
+
+    UserModule
   ],
   controllers: [AppController],
   providers: [AppService],
