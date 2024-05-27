@@ -1,8 +1,10 @@
-import { Entity } from '../entities/';
-import { EntityFactoryInterface, StorableEntityInterface } from '../interfaces/';
-import { Document, InferId, Model, UpdateQuery } from 'mongoose';
-import { Repository } from '../interfaces/repository.interface';
 import { NotFoundException } from '@nestjs/common';
+import { Document, InferId, Model, UpdateQuery } from 'mongoose';
+
+import { Entity } from '../entities/';
+import { Repository } from '../interfaces/repository.interface';
+
+import { EntityFactoryInterface, StorableEntityInterface } from '../interfaces/';
 import { RepositoryMessage } from './repository.constant';
 
 export class BaseMongoDbRepository<T extends Entity & StorableEntityInterface<ReturnType<T['toPOJO']>>, DocumentType extends Document>

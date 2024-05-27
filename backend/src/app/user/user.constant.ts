@@ -1,4 +1,4 @@
-import { MessagesType } from '@backend/libs/types';
+import { MessagesType } from '../libs/types/';
 
 export const UserValidation = {
   NAME: {
@@ -18,8 +18,13 @@ export const UserMessage: MessagesType = {
     INCORRECT_CREDENTIALS: 'Incorrect user email/password',
     CANT_UPDATE: 'Can`t update user. Possible reason: Object with fields to update are empty',
     SAME_SUBSCRIPTIONS: 'User and subscribtion target can`t be the same person',
+    CANT_CREATE_TOKENS: 'Can`t get get a new access/refresh tokens',
   },
   SUCCESS: {
+    LOGGED_IN: 'User logged in',
+    CREATED: 'User has been successfully created',
+    NEW_TOKENS: 'Successfully get a new access/refresh tokens',
+
     FOUND: 'User found',
     UPDATED: 'User has been successfully updated',
     DELETED: 'User has been successfully deleted',

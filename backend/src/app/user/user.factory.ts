@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AuthUserInterface, EntityFactoryInterface } from '@backend/libs/interfaces';
+import { AuthUserInterface, EntityFactoryInterface } from '../libs/interfaces';
 import { UserEntity } from './user.entity';
 
 @Injectable()

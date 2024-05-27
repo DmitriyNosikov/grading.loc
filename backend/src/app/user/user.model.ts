@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { AuthUserInterface } from '@backend/libs/interfaces';
+import { AuthUserInterface } from '../libs/interfaces';
 
 @Schema({
   collection: 'users',

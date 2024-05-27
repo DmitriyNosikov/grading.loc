@@ -1,7 +1,11 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { JwtModule } from '@nestjs/jwt';
 
-import { BCryptHasher } from '@backend/libs/helpers';
+import { ConfigEnvironment } from '../../config';
+import { BCryptHasher, getJWTOptions } from '../libs/helpers';
+import { JWTAccessStrategy } from './strategies/jwt-access.strategy';
+import { LocalStrategy } from './strategies/local.strategy';
 
 import { UserModel, UserSchema } from './user.model';
 import { UserFactory } from './user.factory';
@@ -9,11 +13,17 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { UserRepository } from './user.repository';
 
+
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: UserModel.name, schema: UserSchema }
-    ])
+    ]),
+
+    // Модуль для работы с JWT-токенами
+    JwtModule.registerAsync(
+      getJWTOptions(ConfigEnvironment.JWT)
+    ),
   ],
   controllers: [UserController],
   // Провайдеры модуля (API)
@@ -21,6 +31,10 @@ import { UserRepository } from './user.repository';
     UserService,
     UserRepository,
     UserFactory,
+
+    // Стратегии авторизации (PassportJS)
+    JWTAccessStrategy,
+    LocalStrategy,
 
     {
       provide: 'Hasher',

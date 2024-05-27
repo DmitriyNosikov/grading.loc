@@ -2,7 +2,10 @@
 export { BCryptHasher } from './hasher/bcrypt.hasher';
 
 // MONGODB
-export { getMongooseOptions, validateMongoID } from './mongoose'
+export { getMongooseOptions, validateMongoID } from './mongoose';
+
+// JWT
+export { getJWTOptions, getJWTPayload } from './jwt';
 
 // COMMON
 export {
@@ -12,4 +15,4 @@ export {
   getDate,
   getMongoConnectionString,
   getRabbitMQConnectionString
-} from './common'
+} from './common';

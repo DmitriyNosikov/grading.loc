@@ -1,6 +1,8 @@
-import { AuthUserInterface } from '@backend/libs/interfaces';
-import { StorableEntityInterface } from '@backend/libs/interfaces'
-import { Entity } from '@backend/libs/entities';
+
+import { AuthUserInterface } from '../libs/interfaces';
+import { StorableEntityInterface } from '../libs/interfaces';
+import { Entity } from '../libs/entities';
+
 
 export class UserEntity extends Entity implements StorableEntityInterface<AuthUserInterface> {
   public createdAt?: Date;
