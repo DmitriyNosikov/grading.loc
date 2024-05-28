@@ -6,10 +6,20 @@ import { ConfigEnvironment } from './config/config.constant';
 import { ConfigEnum } from './config/config.schema';
 
 import { AppModule } from './app/app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
+  const swaggerConfig = new DocumentBuilder() // Настраиваем Swagger для формирования документации
+  .setTitle('The "Guitar Shop" service')
+  .setDescription('Guitar Shop service API')
+  .setVersion('1.0')
+  .build();
+  const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
+
+  SwaggerModule.setup('spec', app, swaggerDocument);
+
 
   const globalPrefix = 'api';
 

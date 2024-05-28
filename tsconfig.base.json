@@ -37,7 +37,9 @@
 
     /* Paths */
     "paths": {
-      "@shared/*": ["shared/*"]
+      "@shared/*": ["shared/*"],
+      "@backend/libs/*": ["backend/src/app/libs/*"],
+      "@backend/product/*": ["backend/src/app/product/*"],
     }
   },
   "exclude": ["node_modules"],
