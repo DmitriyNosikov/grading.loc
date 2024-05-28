@@ -2,15 +2,19 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
 import { ConfigEnvironment } from './config/config.constant';
 import { ConfigEnum } from './config/config.schema';
 
 import { AppModule } from './app/app.module';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { generateSpecYaml } from '@backend/libs/helpers';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
+
+  // Генерация Swagger-документации
   const swaggerConfig = new DocumentBuilder() // Настраиваем Swagger для формирования документации
   .setTitle('The "Guitar Shop" service')
   .setDescription('Guitar Shop service API')
@@ -20,7 +24,10 @@ async function bootstrap() {
 
   SwaggerModule.setup('spec', app, swaggerDocument);
 
+  // Генерация Spec.yml
+  generateSpecYaml(swaggerDocument);
 
+  // Запуск сервера
   const globalPrefix = 'api';
 
   app.setGlobalPrefix(globalPrefix);

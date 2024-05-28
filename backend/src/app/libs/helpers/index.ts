@@ -14,5 +14,6 @@ export {
   excludeKeys,
   getDate,
   getMongoConnectionString,
-  getRabbitMQConnectionString
+  getRabbitMQConnectionString,
+  generateSpecYaml
 } from './common';

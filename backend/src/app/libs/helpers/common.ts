@@ -1,4 +1,8 @@
 import { plainToClass, ClassConstructor, ClassTransformOptions } from 'class-transformer';
+import { resolve } from 'node:path';
+import { OpenAPIObject } from '@nestjs/swagger';
+import * as yaml from 'yaml'
+import * as fs from 'node:fs'
 
 export type DateTimeUnit = 's' | 'h' | 'd' | 'm' | 'y';
 export type TimeAndUnit = { value: number; unit: DateTimeUnit };
@@ -73,4 +77,18 @@ export function getMongoConnectionString({ username, password, host, port, dbNam
 
 export function getRabbitMQConnectionString({username, password, host, port}): string {
   return `amqp://${username}:${password}@${host}:${port}`;
+}
+
+export function generateSpecYaml(
+  swaggerDocument: OpenAPIObject,
+  filename: string = 'specification.yml',
+  path: string = '../specification'
+) {
+  const specYamlDir = resolve(path);
+  const specYamlString = yaml.stringify(swaggerDocument, {});
+
+  if(!fs.existsSync(specYamlDir)) {
+    fs.mkdirSync(specYamlDir);
+  }
+  fs.writeFileSync(`${specYamlDir}/${filename}`, specYamlString);
 }

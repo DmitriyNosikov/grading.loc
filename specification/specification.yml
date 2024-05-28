@@ -1,0 +1,165 @@
+openapi: 3.0.0
+paths:
+  /:
+    get:
+      operationId: AppController_getHello
+      parameters: []
+      responses:
+        "200":
+          description: ""
+  /users/register:
+    post:
+      operationId: UserController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserDTO"
+      responses:
+        "201":
+          description: User has been successfully created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRDO"
+        "409":
+          description: User already exists
+      tags: &a1
+        - users
+  /users/login:
+    post:
+      operationId: UserController_login
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginUserDTO"
+      responses:
+        "200":
+          description: User logged in
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRDO"
+        "401":
+          description: Incorrect user email/password
+      tags: *a1
+  /users/check:
+    post:
+      operationId: UserController_checkToken
+      parameters: []
+      responses:
+        "201":
+          description: ""
+      tags: *a1
+  /users:
+    post:
+      operationId: UserController_show
+      summary: Get detail info about user
+      parameters: []
+      responses:
+        "200":
+          description: User found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRDO"
+        "404":
+          description: User not found
+      tags: *a1
+  /users/{userId}:
+    delete:
+      operationId: UserController_deleteUser
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: User has been successfully deleted
+      tags: *a1
+info:
+  title: The "Guitar Shop" service
+  description: Guitar Shop service API
+  version: "1.0"
+  contact: {}
+tags: []
+servers: []
+components:
+  schemas:
+    CreateUserDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: User name
+          example: Tony
+          minimum: 3
+          maximum: 50
+        email:
+          type: string
+          description: User email
+          example: iron-man@starkindustries.it
+        password:
+          type: string
+          description: User password
+          example: jarvis-iron-hearth123
+          minimum: 12
+          maximum: 6
+      required:
+        - name
+        - email
+        - password
+    UserRDO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Uniq user ID
+          example: g83h4y0943-nv934819843-jv934h8t-n923g48n9438
+        createdAt:
+          format: date-time
+          type: string
+          description: Created at date
+          example: 2024-04-26 13:02:24.847
+        updatedAt:
+          format: date-time
+          type: string
+          description: Updated at date
+          example: 2024-04-26 13:02:24.847
+        name:
+          type: string
+          description: User name
+          example: Tony
+        email:
+          type: string
+          description: User email
+          example: iron-man@starkindustries.it
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - name
+        - email
+    LoginUserDTO:
+      type: object
+      properties:
+        email:
+          type: string
+          description: User email
+          example: iron-man@starkindustries.it
+        password:
+          type: string
+          description: User password
+          example: jarvis-iron-hearth123
+          minimum: 12
+          maximum: 6
+      required:
+        - email
+        - password
