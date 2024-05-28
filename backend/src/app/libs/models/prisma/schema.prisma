@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// npx prisma migrate dev \
+// --name "Added model for Product" \
+// --schema ./backend/src/app/libs/models/prisma/schema.prisma \
+// --skip-generate
+
+generator client {
+  provider = "prisma-client-js"
+  output = "../../../../../../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//////////////////// POSTS ////////////////////
+enum ProductType {
+  electro
+  acoustic
+  ukulele
+}
+
+
+model Product {
+  id           String    @id @default(uuid())
+  createdAt    DateTime? @default(now()) @map("created_at")
+  updatedAt    DateTime? @updatedAt @map("updated_at")
+
+  type         ProductType
+  vendorCode   String  @map("vendor_code")
+  title        String
+  description  String
+  photo        String
+  stringsCount Int @map("strings_count")
+  price        Int
+
+  @@map("Product")
+}
+

@@ -1,4 +1,4 @@
-# Compose: docker compose --file=./backend/docker-compose.yml --project-name "grading-user" --env-file=./backend/.env up -d
+# Compose: docker compose --file=./backend/docker-compose.user.yml --project-name "grading-user" --env-file=./backend/.env up -d
 # Healthcheck: docker inspect readme.user.mongodb --format='{{.State.Health}}'
 version: '3.9'
 services:

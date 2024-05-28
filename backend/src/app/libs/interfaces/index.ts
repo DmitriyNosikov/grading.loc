@@ -13,5 +13,8 @@ export { TokenPayloadInterface } from './token/token-payload.interface';
 export { UserInterface } from './user/user.interface';
 export { AuthUserInterface } from './user/auth-user.interface';
 
+// PRODUCT
+export { ProductInterface } from './product/product.interface';
+
 // DB
 export { Repository } from './repository.interface'
