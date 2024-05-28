@@ -2,7 +2,7 @@
 import { ProductInterface } from '@backend/libs/interfaces/product/product.interface';
 import { StorableEntityInterface } from '../libs/interfaces';
 import { Entity } from '../libs/entities';
-import { ProductTypeEnum, StringsCountEnum } from '@backend/libs/types';
+import { ProductTypeEnum } from '@backend/libs/types';
 
 export class ProductEntity extends Entity implements StorableEntityInterface<ProductInterface> {
   public createdAt?: Date;
@@ -10,9 +10,9 @@ export class ProductEntity extends Entity implements StorableEntityInterface<Pro
   public vendorCode: string;
   public title: string;
   public description: string;
-  public photo?: string;
+  public photo: string;
   public type: ProductTypeEnum;
-  public stringsCount: StringsCountEnum;
+  public stringsCount: number;
   public price: number;
 
   constructor(product?: ProductInterface) {

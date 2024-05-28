@@ -1,4 +1,10 @@
+import { SortType, SortDirection } from '@backend/libs/types';
 import { MessagesType } from '../libs/types/';
+
+export const MAX_ITEMS_PER_PAGE = 7; // Максимальное количество результатов при запросе списка
+export const DEFAULT_PAGE_NUMBER = 1;
+export const DEFAULT_SORT_TYPE = SortType.CREATED_AT;
+export const DEFAULT_SORT_DIRECTION = SortDirection.ASC;
 
 export const ProductValidation = {
   TITLE: {
