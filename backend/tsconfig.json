@@ -10,12 +10,11 @@
     "sourceMap": true,
 
     "declaration": true,
-    "incremental": false,
-    // "incremental": true,
+    "incremental": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-  },
+  }
 }

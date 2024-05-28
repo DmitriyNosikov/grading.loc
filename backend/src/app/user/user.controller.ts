@@ -56,7 +56,8 @@ export class UserController {
   // LocalAuthGuard выкидывает результат своей работы в
   // объект Request, в свойство user. Из него мы и возьмем информацию,
   // которую нам возвращает UserService.validate() через LocalAuthGuard
-  public async login(@Body() dto: LoginUserDTO, @Req() { user: loggedUser }: RequestWithUser) {
+  public async login(@Body() dto: LoginUserDTO, @Req() { user: loggedUser }: RequestWithUser, @Req() test: any) {
+    console.log('REQUEST: ', test);
     const userToken = await this.userService.createToken(loggedUser);
 
     const loggedUserWithPayload = {

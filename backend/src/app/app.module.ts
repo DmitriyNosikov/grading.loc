@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { ConfigEnvironment, appConfig, jwtConfig, mongoDBConfig } from '../config';
+import { ConfigEnvironment, appConfig, jwtConfig, mongoDBConfig, smtpConfig } from '../config';
 
 import { getMongooseOptions } from './libs/helpers';
 
@@ -17,7 +17,7 @@ import { AppService } from './app.service';
       isGlobal: true,
       cache: true,
       // Cписок конфигураций для загрузки
-      load: [appConfig, mongoDBConfig, jwtConfig],
+      load: [appConfig, mongoDBConfig, jwtConfig, smtpConfig],
 
       envFilePath: '.env',
     }),

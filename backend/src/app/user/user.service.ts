@@ -2,6 +2,7 @@ import { ConflictException, HttpException, HttpStatus, Inject, Injectable, Logge
 import { JwtService } from '@nestjs/jwt';
 
 import { BCryptHasher, validateMongoID, getJWTPayload } from '../libs/helpers';
+import { SendMailService } from '../send-mail/send-mail.service';
 import { UserInterface } from '../libs/interfaces';
 
 import { UserMessage } from './user.constant';
@@ -24,6 +25,7 @@ export class UserService {
     private readonly hasher: BCryptHasher,
 
     private readonly jwtService: JwtService,
+    private readonly sendMailService: SendMailService
   ) {}
 
   public async register(dto: CreateUserDTO): Promise<UserEntity> {
@@ -47,7 +49,8 @@ export class UserService {
 
     await this.userRepository.create(userEntity);
 
-    // TODO: Отправлять пользователю Email о регистрации через NodeMailer
+    // Отправляем пользователю Email об успешной регистрации
+    await this.sendMailService.sendNewUserEmail(userEntity.toPOJO());
 
     return userEntity;
   }

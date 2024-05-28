@@ -12,6 +12,8 @@ import { UserFactory } from './user.factory';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { UserRepository } from './user.repository';
+import { SendMailModule } from '../send-mail/send-mail.module';
+import { SendMailService } from '../send-mail/send-mail.service';
 
 
 @Module({
@@ -24,6 +26,8 @@ import { UserRepository } from './user.repository';
     JwtModule.registerAsync(
       getJWTOptions(ConfigEnvironment.JWT)
     ),
+
+    SendMailModule,
   ],
   controllers: [UserController],
   // Провайдеры модуля (API)
@@ -40,6 +44,8 @@ import { UserRepository } from './user.repository';
       provide: 'Hasher',
       useClass: BCryptHasher,
     },
+
+    SendMailService
   ],
   //Провайдеры, доступные в других модулях при импорте данного модуля (внешнее API)
   exports: [UserFactory, UserService, UserRepository],
