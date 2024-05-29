@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
-import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import { ApiBody, ApiHeader, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateProductDTO } from '@backend/product/dto/create-product.dto';
 import { CreateProductRDO } from '@backend/product/rdo/create-product.rdo';
 import { fillDTO } from '@backend/libs/helpers';
@@ -18,6 +18,12 @@ import { ProductWithPaginationRDO } from './rdo/product-with-pagination.rdo';
 import { UpdateProductDTO } from './dto/update-product.dto';
 
 @ApiTags('products')
+@ApiHeader({
+  name: 'Authorization',
+  description: 'Authorization JWT-token',
+  example: 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU1YjNiN2FmYmYwNWQzYjUxM2RmNzEiLCJlbWFpbCI6Imlyb24tbWFuQHN0YXJraW5kdXN0cmllcy5pdCIsIm5hbWUiOiJUb255IiwiaWF0IjoxNzE2OTg1MjIxLCJleHAiOjE3MTY5ODU4MjF9.5FNKOfz_RLGRVW7FxdbrnWF3IUcZnTFoBbgcgvyB-OU',
+  required: true
+})
 @UseGuards(JWTAuthGuard)
 @Controller('products')
 export class ProductController {
@@ -26,6 +32,20 @@ export class ProductController {
   ){}
 
   @Post('/')
+  @ApiOperation({ summary: 'Crate new products item' })
+  @ApiBody({
+    type: CreateProductRDO,
+    required: true
+  })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: ProductMessage.SUCCESS.CREATED,
+    type: CreateProductRDO
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: ProductMessage.ERROR.UNAUTHORIZED
+  })
   public async create(@Body() dto: CreateProductDTO): Promise<CreateProductRDO | null> {
     const product = await this.productService.create(dto);
 
@@ -43,40 +63,41 @@ export class ProductController {
   @ApiQuery({
     name: "stringsCount",
     description: `Product strings count`,
-    enum: typeof StringsCount,
+    enum: Object.values(StringsCount),
     example: "/?stringsCount=4",
+    type: Number || String || undefined,
     required: false
   })
   @ApiQuery({
     name: "createdAt",
     description: `Product creation date`,
-    example: "/?createdAt=2024-05-29",
+    example: "2024-05-29",
     required: false
   })
   @ApiQuery({
     name: "limit",
     description: `Items per page (pagination). Max limit: ${MAX_ITEMS_PER_PAGE}`,
-    example: "/?limit=7",
+    example: "7",
     required: false
   })
   @ApiQuery({
     name: "page",
     description: `Current page in pagination (if items count more than "limit"). Default page: ${DEFAULT_PAGE_NUMBER}`,
-    example: "/?page=1",
+    example: "1",
     required: false
   })
   @ApiQuery({
     name: "sortType",
     description: `Sorting type. Default sort type: ${DEFAULT_SORT_TYPE}`,
     enum: SortType,
-    example: "/?sortType=createdAt",
+    example: "createdAt",
     required: false
   })
   @ApiQuery({
     name: "sortDirection",
     description: `Sorting direction. Default direction: ${DEFAULT_SORT_DIRECTION}`,
     enum: SortDirection,
-    example: "/?sortDirection=desc",
+    example: "desc",
     required: false
   })
   @ApiResponse({
@@ -105,17 +126,52 @@ export class ProductController {
   }
 
   @Get('/:productId')
-  public async show(@Param('productId') productId: string): Promise<CreateProductDTO | null> {
+  @ApiParam({
+    name: "productId",
+    example: 'b0103f3e-a6ac-4719-94bc-60c8294c08c6',
+    description: 'Product id',
+    required: true
+  })
+  @ApiOperation({ summary: 'Get detail information about product with passed id' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: ProductMessage.SUCCESS.FOUND,
+    type: CreateProductDTO
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: ProductMessage.ERROR.NOT_FOUND
+  })
+  public async show(@Param('productId') productId: string): Promise<CreateProductRDO | null> {
     const product = await this.productService.getDetail(productId);
 
     if(!product) {
       return;
     }
 
-    return fillDTO(CreateProductDTO, product.toPOJO());
+    return fillDTO(CreateProductRDO, product.toPOJO());
   }
 
   @Patch('/:productId')
+  @ApiOperation({ summary: 'Update product fields with passed id' })
+  @ApiParam({
+    name: "productId",
+    example: 'b0103f3e-a6ac-4719-94bc-60c8294c08c6',
+    description: 'Product id',
+    required: true
+  })
+  @ApiBody({
+    type: UpdateProductDTO
+  })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: ProductMessage.SUCCESS.UPDATED,
+    type: CreateProductRDO
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: ProductMessage.ERROR.NOT_FOUND
+  })
   public async update(
     @Param('productId') productId: string,
     @Body() dto: UpdateProductDTO): Promise<CreateProductRDO | null> {
@@ -125,6 +181,22 @@ export class ProductController {
   }
 
   @Delete('/:productId')
+  @ApiOperation({ summary: 'Delete product with passed id' })
+  @ApiParam({
+    name: "productId",
+    example: 'b0103f3e-a6ac-4719-94bc-60c8294c08c6',
+    description: 'Product id',
+    required: true
+  })
+  @ApiResponse({
+    status: HttpStatus.NO_CONTENT,
+    description: ProductMessage.SUCCESS.DELETED
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: ProductMessage.ERROR.NOT_FOUND
+  })
+  @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Param('productId') productId: string): Promise<void> {
     await this.productService.delete(productId);
   }

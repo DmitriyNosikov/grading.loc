@@ -31,7 +31,7 @@ export const ProductValidation = {
 
 export const ProductMessage: MessagesType = {
   ERROR: {
-    ALREADY_EXISTS: 'Product already exists',
+    UNAUTHORIZED: 'Product can be created/updated/deleted only by authorized user',
     NOT_FOUND: 'Product not found',
   },
   SUCCESS: {

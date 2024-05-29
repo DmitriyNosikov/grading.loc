@@ -6,8 +6,8 @@ GET https://jsonplaceholder.typicode.com/todos/1 HTTP/1.1
 Content-Type: application/json
 ###
 
-@authorization = Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU1YjNiN2FmYmYwNWQzYjUxM2RmNzEiLCJlbWFpbCI6Imlyb24tbWFuQHN0YXJraW5kdXN0cmllcy5pdCIsIm5hbWUiOiJUb255IiwiaWF0IjoxNzE2OTg1MjIxLCJleHAiOjE3MTY5ODU4MjF9.5FNKOfz_RLGRVW7FxdbrnWF3IUcZnTFoBbgcgvyB-OU
-@postId = d2ca42da-af51-4cf3-b26e-818252d0db5b
+@authorization = Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU1YjNiN2FmYmYwNWQzYjUxM2RmNzEiLCJlbWFpbCI6Imlyb24tbWFuQHN0YXJraW5kdXN0cmllcy5pdCIsIm5hbWUiOiJUb255IiwiaWF0IjoxNzE2OTg3NTA3LCJleHAiOjE3MTY5ODgxMDd9.Tr8QunP0Tjw4jU1LLC0rHOw900INV8weNprZCNorSu4
+@postId = 166aaad9-9385-4765-80a0-ccbe44a1fed3
 
 # Creationg product
 POST {{baseUrl}}/ HTTP/1.1
@@ -41,6 +41,11 @@ DELETE {{baseUrl}}/{{postId}} HTTP/1.1
 ###
 
 # Search
+# Get detail information about product
+GET {{baseUrl}}/{{postId}} HTTP/1.1
+{{authorization}}
+###
+# Get products list
 GET {{baseUrl}}/ HTTP/1.1
 {{authorization}}
 ###

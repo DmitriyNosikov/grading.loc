@@ -7,6 +7,7 @@ Content-Type: application/json
 ###
 
 @userId = 6646177524ba8da70246962d
+@authorization = Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU1YjNiN2FmYmYwNWQzYjUxM2RmNzEiLCJlbWFpbCI6Imlyb24tbWFuQHN0YXJraW5kdXN0cmllcy5pdCIsIm5hbWUiOiJUb255IiwiaWF0IjoxNzE2OTg3NTA3LCJleHAiOjE3MTY5ODgxMDd9.Tr8QunP0Tjw4jU1LLC0rHOw900INV8weNprZCNorSu4
 
 # /////////////////////////////////// AUTNENTICATION ///////////////////////////////////
 
@@ -34,7 +35,7 @@ Content-Type: application/json
 
 # Check JWT Token & get token payload
 POST {{baseUrl}}/check/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU0YTA1ZTdiNDZiMjA1NzI3MDljNWIiLCJlbWFpbCI6Imlyb24tbWFuQHN0YXJraW5kdXN0cmllcy5pdCIsIm5hbWUiOiJUb255IiwiaWF0IjoxNzE2ODIyMzU1LCJleHAiOjE3MTY4MjI5NTV9.TWnqxUKkqQlYg2y8j2FmrxlQkJoBrCSzFmhNQL_7Lzw
+{{authorization}}
 ###
 
 # /////////////////////////////////// USER ///////////////////////////////////
