@@ -1,17 +1,20 @@
-#!/usr/bin/env node
-import { Command } from './commands/command.interface';
-import { CLIApplication } from './cli-application';
-import { CLIHelper } from './cli-helper';
+import { Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { NestFactory } from '@nestjs/core';
+import { ConfigEnvironment } from '../../config';
+import { ConfigEnum } from '../../config/config.schema';
+import { CLIModule } from './cli.module';
+import { CLIService } from './cli.service';
 
 async function bootstrap() {
-  console.log('PROCESS ARGV: ', process.argv);
-  const cliHelper = new CLIHelper();
-  const importedCommands: Command[] = await cliHelper.importCommands();
+  const app = await NestFactory.createApplicationContext(CLIModule);
+  const logger = new Logger('CLI App');
+  const cliService = app.get(CLIService);
+  const configService = app.get(ConfigService);
 
-  const application = new CLIApplication();
+  logger.log(configService.get(`${ConfigEnvironment.APP}.${ConfigEnum.HOST}`));
 
-  application.registrCommands(importedCommands);
-  application.executeCommand(process.argv);
+  cliService.execute();
 }
 
 bootstrap();

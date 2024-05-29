@@ -8,27 +8,25 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-
+    "docker:compose:user": "docker compose --file=./docker-compose.user.yml --project-name 'grading-user' --env-file=./.env up -d",
+    "docker:compose:product": "docker compose --file=./docker-compose.product.yml --project-name 'grading-product' --env-file=./.env up -d",
     "pg:validate": "npx prisma validate --schema ./src/app/libs/models/prisma/schema.prisma",
     "pg:migrate": "npx prisma migrate dev --schema ./src/app/libs/models/prisma/schema.prisma --skip-generate --skip-seed",
     "pg:generate": "npx prisma generate --schema ./src/app/libs/models/prisma/schema.prisma",
     "pg:reset": "npx prisma migrate reset --schema ./src/app/libs/models/prisma/schema.prisma --force --skip-generate --skip-seed",
     "pg:fill": "npx ts-node ./src/app/libs/models/prisma/seed.ts",
     "pg:rebuild": "npm run pg:migrate && npm run pg:generate",
-    "pg:reinit": "npm run pg:reset && npm run pg:fill"
+    "pg:refill": "npm run pg:reset && npm run pg:fill"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "2.0.2",
@@ -43,6 +41,8 @@
     "bcrypt": "5.1.1",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.1",
+    "commander": "12.1.0",
+    "faker": "6.6.6",
     "handlebars": "4.7.8",
     "mongoose": "8.4.0",
     "passport": "0.7.0",
@@ -52,10 +52,12 @@
     "rxjs": "^7.8.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "8.4.1",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/swagger": "7.3.1",
     "@nestjs/testing": "^10.0.0",
+    "@prisma/adapter-pg": "5.14.0",
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.2",
     "@types/node": "20.12.12",
@@ -69,6 +71,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "jest": "^29.5.0",
+    "pg": "8.11.5",
     "prettier": "^3.0.0",
     "prisma": "5.14.0",
     "source-map-support": "^0.5.21",

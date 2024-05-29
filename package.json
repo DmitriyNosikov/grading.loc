@@ -10,6 +10,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "cli": "ts-node --project ./backend/tsconfig.json ./backend/src/app/cli/main.cli.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run build --workspaces",
     "start:backend": "npm run start --workspace backend",

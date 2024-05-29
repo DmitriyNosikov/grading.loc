@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
-import { resolve } from 'node:path';
 import { glob } from 'glob';
+import { resolve } from 'node:path';
 import { Command } from './commands/command.interface';
 
 const WINDOWS_FILE_PROTOCOL = 'file:///';
@@ -28,7 +28,7 @@ export class CLIHelper {
     this.commandFiles = glob.sync(`${COMMANDS_DIR}/*.command.ts`);
   }
 
-  public async importCommands() {
+  public async importCommands(): Promise<Command[]> {
     for(const file of this.commandFiles) {
       this.logger.log(`${MessageText.PARSE} ${file}`);
 
@@ -42,7 +42,6 @@ export class CLIHelper {
         if(typeof importedModule[CommandClassName] !== 'function') {
           continue;
         }
-
 
         const commandInstance = new importedModule[CommandClassName]();
 
