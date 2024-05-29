@@ -81,6 +81,18 @@ export class ProductRepository extends BasePostgresRepository<ProductEntity, Pro
     }
   }
 
+  public async isExists(id: string): Promise<boolean> {
+    const product = await this.dbClient.product.findFirst({
+      where: { id }
+    });
+
+    if(!product) {
+      return false;
+    }
+
+    return true;
+  }
+
   //////////////////// Вспомогательные методы поиска и пагинации ////////////////////
   private getSearchFilters(query: SearchQuery): SearchFilters {
     const where: Prisma.ProductWhereInput = {};

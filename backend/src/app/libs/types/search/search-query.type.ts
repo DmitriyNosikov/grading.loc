@@ -25,7 +25,7 @@ export class SearchQuery {
   @Expose()
   @IsDateString()
   @IsOptional()
-  public publishedAt?: Date;
+  public createdAt?: Date;
 
   @Expose()
   @Transform(({ value }) => Number(value) || MAX_ITEMS_PER_PAGE)

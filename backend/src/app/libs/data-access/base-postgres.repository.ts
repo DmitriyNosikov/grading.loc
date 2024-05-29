@@ -1,5 +1,3 @@
-
-
 import { PrismaClientService } from '../../prisma-client/prisma-client.service';
 import { Entity } from '../entities/';
 import { Repository } from '../interfaces/repository.interface';

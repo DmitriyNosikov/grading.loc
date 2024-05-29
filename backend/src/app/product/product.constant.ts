@@ -1,5 +1,7 @@
-import { SortType, SortDirection } from '@backend/libs/types';
+import { SortDirection, SortType } from '../libs/types/search/sort-type.enum'
 import { MessagesType } from '../libs/types/';
+
+console.log('TYPES: ', SortDirection);
 
 export const MAX_ITEMS_PER_PAGE = 7; // Максимальное количество результатов при запросе списка
 export const DEFAULT_PAGE_NUMBER = 1;
@@ -34,10 +36,6 @@ export const ProductMessage: MessagesType = {
     NOT_FOUND: 'Product not found',
   },
   SUCCESS: {
-    LOGGED_IN: 'User logged in',
-    CREATED: 'User has been successfully created',
-    NEW_TOKENS: 'Successfully get a new access/refresh tokens',
-
     FOUND: 'Product found',
     UPDATED: 'Product has been successfully updated',
     DELETED: 'Product has been successfully deleted',

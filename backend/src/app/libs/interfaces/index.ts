@@ -15,6 +15,7 @@ export { AuthUserInterface } from './user/auth-user.interface';
 
 // PRODUCT
 export { ProductInterface } from './product/product.interface';
+export { PaginationResult } from './pagination-result.interface';
 
 // DB
 export { Repository } from './repository.interface'

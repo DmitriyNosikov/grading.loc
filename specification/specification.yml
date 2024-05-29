@@ -84,6 +84,119 @@ paths:
         "200":
           description: User has been successfully deleted
       tags: *a1
+  /products:
+    post:
+      operationId: ProductController_create
+      parameters: []
+      responses:
+        "201":
+          description: ""
+      tags: &a2
+        - products
+    get:
+      operationId: ProductController_index
+      summary: Get products list by passed params (or without it)
+      parameters:
+        - name: sortDirection
+          required: false
+          in: query
+          description: "Sorting direction. Default direction: asc"
+          example: /?sortDirection=desc
+          schema:
+            enum:
+              - asc
+              - desc
+            type: string
+        - name: sortType
+          required: false
+          in: query
+          description: "Sorting type. Default sort type: createdAt"
+          example: /?sortType=createdAt
+          schema:
+            enum:
+              - price
+              - createdAt
+            type: string
+        - name: page
+          required: false
+          in: query
+          description: 'Current page in pagination (if items count more than "limit").
+            Default page: 1'
+          example: /?page=1
+          schema: {}
+        - name: limit
+          required: false
+          in: query
+          description: "Items per page (pagination). Max limit: 7"
+          example: /?limit=7
+          schema: {}
+        - name: createdAt
+          required: false
+          in: query
+          description: Product creation date
+          example: /?createdAt=2024-05-29
+          schema: {}
+        - name: stringsCount
+          required: false
+          in: query
+          description: Product strings count
+          example: /?stringsCount=4
+          schema:
+            enum: []
+            type: number
+        - name: title
+          required: false
+          in: query
+          description: Product title
+          example: Richie Sambora`s guitar
+          schema: {}
+      responses:
+        "200":
+          description: Product found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductWithPaginationRDO"
+        "404":
+          description: Product not found
+      tags: *a2
+  /products/{productId}:
+    get:
+      operationId: ProductController_show
+      parameters:
+        - name: productId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags: *a2
+    patch:
+      operationId: ProductController_update
+      parameters:
+        - name: productId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags: *a2
+    delete:
+      operationId: ProductController_delete
+      parameters:
+        - name: productId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags: *a2
 info:
   title: The "Guitar Shop" service
   description: Guitar Shop service API
@@ -163,3 +276,110 @@ components:
       required:
         - email
         - password
+    CreateProductRDO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Product id
+          example: pv9230ndfg92381203i9hn-g0924
+        createdAt:
+          format: date-time
+          type: string
+          description: Product created date
+          example: 2024-05-28 15:01:51.449
+        updatedAt:
+          format: date-time
+          type: string
+          description: Product updated date
+          example: 2024-05-28 15:01:51.449
+        vendorCode:
+          type: string
+          description: Product vendor code
+          example: pv9230ndfg92381203i9hn-g0924
+          minimum: 6
+          maximum: 12
+        title:
+          type: string
+          description: Product title
+          example: Richie Sambora`s guitar
+          minimum: 10
+          maximum: 100
+        description:
+          type: string
+          description: Product description
+          example: It`s a perfect and rair guitar, that was firstly presented on LP
+            concert
+          minimum: 6
+          maximum: 12
+        photo:
+          type: string
+          description: Product photo URL (.jpg/.png)
+          example: http://some.interesting/photo.jpg
+        type:
+          type: string
+          description: Product type
+          example: electro
+          enum:
+            - electro
+            - acoustic
+            - ukulele
+          minimum: 10
+          maximum: 100
+        stringsCount:
+          type: number
+          description: Product strings count
+          example: "4"
+          enum:
+            - 4
+            - 6
+            - 7
+            - 12
+          minimum: 10
+          maximum: 100
+        price:
+          type: number
+          description: Product price
+          example: "100000"
+          minimum: 10
+          maximum: 100
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - vendorCode
+        - title
+        - description
+        - photo
+        - type
+        - stringsCount
+        - price
+    ProductWithPaginationRDO:
+      type: object
+      properties:
+        entities:
+          description: Product entities array
+          allOf:
+            - $ref: "#/components/schemas/CreateProductRDO"
+        totalPages:
+          type: number
+          description: Paginated product pages count
+          example: 2
+        totalItems:
+          type: number
+          description: Total producs count
+          example: 23
+        currentPage:
+          type: number
+          description: Current page number in pagination
+          example: 1
+        itemsPerPage:
+          type: number
+          description: product per page
+          example: 7
+      required:
+        - entities
+        - totalPages
+        - totalItems
+        - currentPage
+        - itemsPerPage

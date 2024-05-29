@@ -1,5 +1,5 @@
 import { CreatedUpdatedDatesInterface } from '../created-updated-dates.interface';
-import { ProductTypeEnum, StringsCountEnum } from '../../types'
+import { ProductTypeEnum } from '../../types'
 
 export interface ProductInterface extends CreatedUpdatedDatesInterface {
   id?: string;
@@ -8,6 +8,6 @@ export interface ProductInterface extends CreatedUpdatedDatesInterface {
   description: string;
   photo: string;
   type: ProductTypeEnum;
-  stringsCount: StringsCountEnum;
+  stringsCount: number;
   price: number;
 }

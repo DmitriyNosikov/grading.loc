@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsIn, IsNumber, IsOptional, IsString, Max, MaxLength, Min, MinLength } from 'class-validator';
 
-import { ProductType, ProductTypeEnum, productTypeList, StringsCount, StringsCountEnum } from '@backend/libs/types';
+import { ProductType, ProductTypeEnum, productTypeList, StringsCount } from '@backend/libs/types';
 import { ProductValidation } from '@backend/product/product.constant';
 
-export class CreateProductDTO {
+export class UpdateProductDTO {
   @ApiProperty({
     description: 'Product vendor code',
     example: 'pv9230ndfg92381203i9hn-g0924',
@@ -14,7 +14,8 @@ export class CreateProductDTO {
   @MaxLength(ProductValidation.VENDOR_CODE.MAX_LENGTH)
   @MinLength(ProductValidation.VENDOR_CODE.MIN_LENGTH)
   @IsString()
-  vendorCode: string;
+  @IsOptional()
+  vendorCode?: string;
 
   @ApiProperty({
     description: 'Product title',
@@ -25,7 +26,8 @@ export class CreateProductDTO {
   @MaxLength(ProductValidation.TITLE.MAX_LENGTH)
   @MinLength(ProductValidation.TITLE.MIN_LENGTH)
   @IsString()
-  title: string;
+  @IsOptional()
+  title?: string;
 
   @ApiProperty({
     description: 'Product description',
@@ -36,7 +38,8 @@ export class CreateProductDTO {
   @MaxLength(ProductValidation.DESCRIPTION.MAX_LENGTH)
   @MinLength(ProductValidation.DESCRIPTION.MIN_LENGTH)
   @IsString()
-  description: string;
+  @IsOptional()
+  description?: string;
 
   @ApiProperty({
     description: 'Product photo URL (.jpg/.png)',
@@ -44,7 +47,8 @@ export class CreateProductDTO {
   })
   @IsString()
   @IsOptional()
-  photo: string;
+  @IsOptional()
+  photo?: string;
 
   @ApiProperty({
     description: 'Product type',
@@ -55,7 +59,8 @@ export class CreateProductDTO {
   })
   @IsIn(productTypeList)
   @IsString()
-  type: ProductTypeEnum;
+  @IsOptional()
+  type?: ProductTypeEnum;
 
   @ApiProperty({
     description: 'Product strings count',
@@ -67,7 +72,8 @@ export class CreateProductDTO {
   @IsIn(StringsCount)
   @Min(ProductValidation.STRINGS_COUNT.MIN)
   @IsNumber()
-  stringsCount: StringsCountEnum;
+  @IsOptional()
+  stringsCount?: number;
 
   @ApiProperty({
     description: 'Product price',
@@ -79,5 +85,6 @@ export class CreateProductDTO {
   @Min(ProductValidation.PRICE.MIN)
   @Max(ProductValidation.PRICE.MAX)
   @IsNumber()
-  price: number;
+  @IsOptional()
+  price?: number;
 }

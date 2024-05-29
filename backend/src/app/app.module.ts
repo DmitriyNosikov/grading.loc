@@ -10,6 +10,7 @@ import { UserModule } from './user/user.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import { AppService } from './app.service';
       getMongooseOptions(ConfigEnvironment.MONGODB)
     ),
 
-    UserModule
+    UserModule,
+    ProductModule
   ],
   controllers: [AppController],
   providers: [AppService],
