@@ -6,7 +6,7 @@ GET https://jsonplaceholder.typicode.com/todos/1 HTTP/1.1
 Content-Type: application/json
 ###
 
-@authorization = Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU1YjNiN2FmYmYwNWQzYjUxM2RmNzEiLCJlbWFpbCI6Imlyb24tbWFuQHN0YXJraW5kdXN0cmllcy5pdCIsIm5hbWUiOiJUb255IiwiaWF0IjoxNzE2OTg3NTA3LCJleHAiOjE3MTY5ODgxMDd9.Tr8QunP0Tjw4jU1LLC0rHOw900INV8weNprZCNorSu4
+@authorization = Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU3YTIzMWY1ZGU2Y2IzZmUzNGE0NWYiLCJlbWFpbCI6Imlyb24tbWFuQHN0YXJraW5kdXN0cmllcy5pdCIsIm5hbWUiOiJUb255IiwiaWF0IjoxNzE3MDE5MTkyLCJleHAiOjE3MTcwMTk3OTJ9.g5WT8EKJciH2sg70lT2Qg79mJ7HqbVSP0nvcE4fllIQ
 @postId = 166aaad9-9385-4765-80a0-ccbe44a1fed3
 
 # Creationg product

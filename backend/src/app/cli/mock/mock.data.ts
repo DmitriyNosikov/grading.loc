@@ -25,7 +25,7 @@ export function getMockProduct() {
 
   return {
     vendorCode: randomUUID(),
-    title: faker.helpers.arrayElement(musicalInstruments),
+    title: `${faker.helpers.arrayElement(musicalInstruments)} .no#${faker.number.int({ max: 1000 })}`,
     description: faker.lorem.words(10),
     photo: "https://some.interesting/photo.jpg",
     type: faker.helpers.arrayElement(Object.values(productTypeList)),

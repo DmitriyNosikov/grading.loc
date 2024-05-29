@@ -1,8 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '@prisma/client';
 import { Command } from 'commander';
-import { Pool } from 'pg';
 import { BCryptHasher } from '../libs/helpers';
 import { MongoDatabaseClient } from './database-client/mongo.database-client';
 import { getMockProduct } from './mock/mock.data';
@@ -10,8 +8,9 @@ import { getMockProduct } from './mock/mock.data';
 @Injectable()
 export class CLIService {
   private readonly logger: Logger = new Logger(CLIService.name);
-  private mongoDBConnection = new MongoDatabaseClient();
   private readonly program: Command;
+  private mongoDBCLient: MongoDatabaseClient;
+  private prismaClient:PrismaClient;
 
 
   constructor(
@@ -37,26 +36,42 @@ export class CLIService {
     this.registerGenerateCommand();
   }
 
-  private registerGenerateCommand() {
-    this.program
+  private async registerGenerateCommand() {
+    await this.program
       .command('generate')
       .argument('<n>', 'generate items count')
       .argument('<dbConnectionString>', 'correct PostgreSQL connection string')
       .action((itemsCount, connectionString) => {
-        // DATABASE_URL = postgres://admin:admin@localhost:5432/grading-product
         const products = Array.from({ length: itemsCount }, getMockProduct);
-        console.log('CONNECTION STRING: ', connectionString);
-        console.log('GENERATED PRODUCTS: ', products);
+
+        this.logger.log('📃 Fill PostgreSQL database ...');
+        this.connectToPostgreSQL(connectionString);
+        this.insertProducts(products);
       })
   }
 
-  private async connectToMongoDB(connectionUri: string) {
-    this.mongoDBConnection.connect(connectionUri);
+  private async insertProducts(products) {
+    const result = await this.prismaClient.product.createMany({
+      data: products,
+      skipDuplicates: true
+    });
+
+    this.logger.log(`🤘️ Items count successfully inserted into PostgreSQL database: ${result.count}`);
+  }
+
+  private async connectToMongoDB(conenctionString: string) {
+    this.mongoDBCLient = new MongoDatabaseClient();
+    this.mongoDBCLient.connect(conenctionString);
   }
 
   private connectToPostgreSQL(conenctionString: string) {
-    const pool = new Pool({ conenctionString });
-    const adapter = new PrismaPg(pool);
-    const prisma = new PrismaClient({ adapter });
+    // postgres://admin:admin@localhost:5432/grading-product
+    this.prismaClient = new PrismaClient({
+      datasources: {
+        db: {
+          url: conenctionString
+        }
+      }
+     });
   }
 }
