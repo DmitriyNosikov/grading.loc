@@ -64,7 +64,7 @@ export class ProductController {
     name: "stringsCount",
     description: `Product strings count`,
     enum: Object.values(StringsCount),
-    example: "/?stringsCount=4",
+    example: "4",
     type: Number || String || undefined,
     required: false
   })
@@ -97,7 +97,7 @@ export class ProductController {
     name: "sortDirection",
     description: `Sorting direction. Default direction: ${DEFAULT_SORT_DIRECTION}`,
     enum: SortDirection,
-    example: "desc",
+    example: " Pdesc",
     required: false
   })
   @ApiResponse({

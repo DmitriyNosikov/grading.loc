@@ -29,7 +29,7 @@ export class CreateProductDTO {
 
   @ApiProperty({
     description: 'Product description',
-    example: 'It`s a perfect and rair guitar, that was firstly presented on LP concert',
+    example: 'It`s a perfect and rare guitar, that was firstly presented on LP concert',
     minimum: ProductValidation.DESCRIPTION.MIN_LENGTH,
     maximum: ProductValidation.DESCRIPTION.MAX_LENGTH,
   })
