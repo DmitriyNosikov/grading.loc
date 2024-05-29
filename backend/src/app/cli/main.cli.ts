@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-import 'reflect-metadata';
-import { CLIApplication } from './cli-application';
 import { Command } from './commands/command.interface';
-import { importCommands } from './import-commands';
+import { CLIApplication } from './cli-application';
+import { CLIHelper } from './cli-helper';
 
 async function bootstrap() {
-  const importedCommands: Command[] = await importCommands();
+  console.log('PROCESS ARGV: ', process.argv);
+  const cliHelper = new CLIHelper();
+  const importedCommands: Command[] = await cliHelper.importCommands();
 
   const application = new CLIApplication();
 

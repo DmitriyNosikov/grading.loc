@@ -4,7 +4,7 @@
     "target": "es2015",
     "module": "commonjs",
     "moduleResolution": "node",
-    "lib": ["es2020", "dom"],
+    "lib": ["es2022", "dom"],
     "outDir": "./dist",
     "rootDir": ".",
     "sourceMap": true,

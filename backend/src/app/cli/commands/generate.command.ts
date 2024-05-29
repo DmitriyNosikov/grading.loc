@@ -1,8 +1,6 @@
 import { Command } from './command.interface.js';
 
 export class GenerateCommand implements Command {
-  private mockData: MockData | null = null;
-
   public getName(): string {
     return '--generate';
   }

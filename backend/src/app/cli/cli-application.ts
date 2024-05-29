@@ -1,5 +1,5 @@
-import { CommandParser } from './command-parser.js';
-import { Command } from './commands/command.interface.js';
+import { CLIHelper } from './cli-helper';
+import { Command } from './commands/command.interface';
 
 const DEFAULT_COMMAND = '--help';
 
@@ -12,10 +12,13 @@ type CommandCollection = Record<string, Command>;
 
 export class CLIApplication {
   private commands: CommandCollection = {};
+  private CLIHelper;
 
   constructor(
     private readonly defaultCommand: string = DEFAULT_COMMAND
-  ) {}
+  ) {
+    this.CLIHelper = new CLIHelper();
+  }
 
   public registrCommands(commandClassList: Command[]): void {
     commandClassList.forEach((commandClass) => {
@@ -40,7 +43,7 @@ export class CLIApplication {
   }
 
   public executeCommand(cliArgv: string[]):void {
-    const parsedCommands = CommandParser.parse(cliArgv);
+    const parsedCommands = this.CLIHelper.parseCommands(cliArgv);
     const [commandName] = Object.keys(parsedCommands);
     const command = this.getCommand(commandName);
     const commandArguments = parsedCommands[commandName] ?? [];
