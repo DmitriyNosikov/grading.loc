@@ -4,6 +4,8 @@ import { CreateProductDTO } from '@backend/product/dto/create-product.dto';
 import { ProductFactory } from './product.factory';
 import { UpdateProductDTO } from '@backend/product/dto/update-product.dto';
 import { SearchQuery } from '@backend/libs/types';
+import { fillDTO, omitUndefined } from '@backend/libs/helpers';
+
 
 @Injectable()
 export class ProductService {
@@ -72,5 +74,12 @@ export class ProductService {
     }
 
     return true;
+  }
+
+  public filterQuery(query: SearchQuery) {
+    const filteredQuery = fillDTO(SearchQuery, query);
+    const omitedQuery = omitUndefined(filteredQuery as Record<string, unknown>);
+
+    return omitedQuery;
   }
 }

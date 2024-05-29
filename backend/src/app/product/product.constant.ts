@@ -1,8 +1,6 @@
 import { SortDirection, SortType } from '../libs/types/search/sort-type.enum'
 import { MessagesType } from '../libs/types/';
 
-console.log('TYPES: ', SortDirection);
-
 export const MAX_ITEMS_PER_PAGE = 7; // Максимальное количество результатов при запросе списка
 export const DEFAULT_PAGE_NUMBER = 1;
 export const DEFAULT_SORT_TYPE = SortType.CREATED_AT;
@@ -14,15 +12,16 @@ export const ProductValidation = {
     MAX_LENGTH: 100,
   },
   VENDOR_CODE: {
-    MIN_LENGTH: 6,
-    MAX_LENGTH: 12,
+    MIN_LENGTH: 5,
+    MAX_LENGTH: 40,
   },
   DESCRIPTION: {
-    MIN_LENGTH: 6,
-    MAX_LENGTH: 12,
+    MIN_LENGTH: 20,
+    MAX_LENGTH: 1024,
   },
   STRINGS_COUNT: {
-    MIN: 4
+    MIN: 4,
+    MAX: 12,
   },
   PRICE: {
     MIN: 100,

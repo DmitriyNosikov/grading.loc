@@ -50,8 +50,6 @@ export class CreateProductDTO {
     description: 'Product type',
     example: 'electro',
     enum: ProductType,
-    minimum: ProductValidation.TITLE.MIN_LENGTH,
-    maximum: ProductValidation.TITLE.MAX_LENGTH,
   })
   @IsIn(productTypeList)
   @IsString()
@@ -61,21 +59,21 @@ export class CreateProductDTO {
     description: 'Product strings count',
     example: '4',
     enum: StringsCount,
-    minimum: ProductValidation.TITLE.MIN_LENGTH,
-    maximum: ProductValidation.TITLE.MAX_LENGTH,
+    minimum: ProductValidation.STRINGS_COUNT.MIN,
+    maximum: ProductValidation.STRINGS_COUNT.MAX,
   })
-  @IsIn(StringsCount)
+  @IsIn(Object.values(StringsCount))
   @Min(ProductValidation.STRINGS_COUNT.MIN)
+  @Max(ProductValidation.STRINGS_COUNT.MAX)
   @IsNumber()
   stringsCount: number;
 
   @ApiProperty({
     description: 'Product price',
     example: '100000',
-    minimum: ProductValidation.TITLE.MIN_LENGTH,
-    maximum: ProductValidation.TITLE.MAX_LENGTH,
+    minimum: ProductValidation.PRICE.MIN,
+    maximum: ProductValidation.PRICE.MAX,
   })
-  @IsIn(StringsCount)
   @Min(ProductValidation.PRICE.MIN)
   @Max(ProductValidation.PRICE.MAX)
   @IsNumber()

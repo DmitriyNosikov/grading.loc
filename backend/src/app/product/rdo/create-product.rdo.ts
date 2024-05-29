@@ -9,7 +9,7 @@ export class CreateProductRDO {
     example: 'pv9230ndfg92381203i9hn-g0924',
   })
   @Expose()
-  id: string;
+  id?: string;
 
   @ApiProperty({
     description: 'Product created date',
@@ -63,8 +63,6 @@ export class CreateProductRDO {
     description: 'Product type',
     example: 'electro',
     enum: ProductType,
-    minimum: ProductValidation.TITLE.MIN_LENGTH,
-    maximum: ProductValidation.TITLE.MAX_LENGTH,
   })
   @Expose()
   type: ProductTypeEnum;
@@ -73,8 +71,8 @@ export class CreateProductRDO {
     description: 'Product strings count',
     example: '4',
     enum: StringsCount,
-    minimum: ProductValidation.TITLE.MIN_LENGTH,
-    maximum: ProductValidation.TITLE.MAX_LENGTH,
+    minimum: ProductValidation.STRINGS_COUNT.MIN,
+    maximum: ProductValidation.STRINGS_COUNT.MAX,
   })
   @Expose()
   stringsCount: StringsCountEnum;
@@ -82,8 +80,8 @@ export class CreateProductRDO {
   @ApiProperty({
     description: 'Product price',
     example: '100000',
-    minimum: ProductValidation.TITLE.MIN_LENGTH,
-    maximum: ProductValidation.TITLE.MAX_LENGTH,
+    minimum: ProductValidation.PRICE.MIN,
+    maximum: ProductValidation.PRICE.MAX,
   })
   @Expose()
   price: number;

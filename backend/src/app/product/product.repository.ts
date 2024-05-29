@@ -98,6 +98,14 @@ export class ProductRepository extends BasePostgresRepository<ProductEntity, Pro
     const where: Prisma.ProductWhereInput = {};
     const orderBy: Prisma.ProductOrderByWithRelationInput = {};
 
+    // Поиск по заголовку
+    if(query?.title) {
+      where.title = {
+        contains: query.title,
+        mode: 'insensitive'
+      }
+    }
+
     // Поиск по определенному типу
     if(query?.type) {
       where.type = query.type;

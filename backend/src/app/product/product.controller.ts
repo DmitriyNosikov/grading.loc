@@ -1,13 +1,21 @@
-import { Controller, Delete, Get, HttpStatus, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ProductService } from './product.service';
 import { CreateProductDTO } from '@backend/product/dto/create-product.dto';
 import { CreateProductRDO } from '@backend/product/rdo/create-product.rdo';
 import { fillDTO } from '@backend/libs/helpers';
 import { SearchQuery, SortDirection, SortType, StringsCount } from '@backend/libs/types';
+
+import {
+  DEFAULT_PAGE_NUMBER,
+  DEFAULT_SORT_DIRECTION,
+  DEFAULT_SORT_TYPE,
+  MAX_ITEMS_PER_PAGE,
+  ProductMessage
+} from './product.constant';
 import { JWTAuthGuard } from '../user/guards/jwt-auth.guard';
-import { DEFAULT_PAGE_NUMBER, DEFAULT_SORT_DIRECTION, DEFAULT_SORT_TYPE, MAX_ITEMS_PER_PAGE, ProductMessage } from './product.constant';
+import { ProductService } from './product.service';
 import { ProductWithPaginationRDO } from './rdo/product-with-pagination.rdo';
+import { UpdateProductDTO } from './dto/update-product.dto';
 
 @ApiTags('products')
 @UseGuards(JWTAuthGuard)
@@ -18,7 +26,7 @@ export class ProductController {
   ){}
 
   @Post('/')
-  public async create(dto: CreateProductDTO): Promise<CreateProductRDO | null> {
+  public async create(@Body() dto: CreateProductDTO): Promise<CreateProductRDO | null> {
     const product = await this.productService.create(dto);
 
     return fillDTO(CreateProductRDO, product.toPOJO());
@@ -80,11 +88,17 @@ export class ProductController {
     status: HttpStatus.NOT_FOUND,
     description: ProductMessage.ERROR.NOT_FOUND
   })
-  public async index(@Query() query: SearchQuery): Promise<ProductWithPaginationRDO | null> {
-    const products = await this.productService.search(query);
+  public async index(@Query() query?: SearchQuery): Promise<ProductWithPaginationRDO | null> {
+    const preparedQuery = this.productService.filterQuery(query);
+    const documents = await this.productService.search(preparedQuery);
 
-    if(!products.entities || products.entities.length <= 0) {
+    if(!documents.entities || documents.entities.length <= 0) {
       return;
+    }
+
+    const products = {
+      ...documents,
+      entities: documents.entities.map((document) => document.toPOJO())
     }
 
     return products;
@@ -104,7 +118,7 @@ export class ProductController {
   @Patch('/:productId')
   public async update(
     @Param('productId') productId: string,
-    dto: CreateProductDTO): Promise<CreateProductRDO | null> {
+    @Body() dto: UpdateProductDTO): Promise<CreateProductRDO | null> {
     const updatedProduct = await this.productService.update(productId, dto);
 
     return fillDTO(CreateProductRDO, updatedProduct.toPOJO());

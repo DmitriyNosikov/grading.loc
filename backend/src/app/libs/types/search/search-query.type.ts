@@ -1,6 +1,6 @@
 import { Expose, Transform } from 'class-transformer';
 import { IsDateString, IsIn, IsNumber, IsOptional, IsString, Max } from 'class-validator';
-import { ProductTypeEnum } from '../product-type.enum';
+import { ProductTypeEnum, productTypeList } from '../product-type.enum';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_SORT_DIRECTION, DEFAULT_SORT_TYPE, MAX_ITEMS_PER_PAGE } from '@backend/product/product.constant';
 import { SortDirection, SortDirectionEnum, SortType, SortTypeEnum } from './sort-type.enum';
 import { StringsCount } from '../strings-count.enum';
@@ -12,11 +12,13 @@ export class SearchQuery {
   public title?: string;
 
   @Expose()
+  @IsIn(productTypeList)
   @IsString()
   @IsOptional()
   public type?: ProductTypeEnum;
 
   @Expose()
+  @Transform(({ value }) => { (value === undefined) ? undefined : Number(value) })
   @IsIn(Object.values(StringsCount))
   @IsNumber()
   @IsOptional()

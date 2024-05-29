@@ -25,7 +25,7 @@ export class ProductEntity extends Entity implements StorableEntityInterface<Pro
       return;
     }
 
-    this.id = product.id ?? '';
+    this.id = product.id;
     this.createdAt = product.createdAt;
     this.updatedAt = product.updatedAt;
     this.vendorCode = product.vendorCode;
