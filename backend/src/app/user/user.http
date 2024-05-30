@@ -7,7 +7,7 @@ Content-Type: application/json
 ###
 
 @userId = 6657a231f5de6cb3fe34a45f
-@authorization = Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU1YjNiN2FmYmYwNWQzYjUxM2RmNzEiLCJlbWFpbCI6Imlyb24tbWFuQHN0YXJraW5kdXN0cmllcy5pdCIsIm5hbWUiOiJUb255IiwiaWF0IjoxNzE2OTg3NTA3LCJleHAiOjE3MTY5ODgxMDd9.Tr8QunP0Tjw4jU1LLC0rHOw900INV8weNprZCNorSu4
+@authorization = Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU1YjNiN2FmYmYwNWQzYjUxM2RmNzEiLCJlbWFpbCI6Imlyb24tbWFuQHN0YXJraW5kdXN0cmllcy5pdCIsIm5hbWUiOiJUb255IiwiaWF0IjoxNzE3MDcxNjU1LCJleHAiOjE3MTcwNzIyNTV9.Ln164Uw1f2tv-rYKsnWo7rJuBQxrvJAEXYnkv1yYqpw
 
 # /////////////////////////////////// AUTNENTICATION ///////////////////////////////////
 

@@ -10,6 +10,11 @@ import { UserSchema } from '../user/user.model';
 import { BCryptHasher, getMongoConnectionString } from '../libs/helpers';
 import { getMockAdmin, getMockProduct } from './mock/mock.data';
 
+/**
+ * Commands-list:
+ * npm run cli --generate 3 postgresql_conection_string
+ * npm run cli -- --help
+ */
 @Injectable()
 export class CLIService {
   private readonly logger: Logger = new Logger(CLIService.name);
@@ -24,14 +29,12 @@ export class CLIService {
     private readonly configService: ConfigService,
   ) {
     this.program = new Command();
-    // Регистрируем команды
     this.registerCommands();
-    // Включаем парсинг коммандной строки
-    this.program.parse();
   }
 
   public execute() {
-    this.logger.log(`🚀 CLI Application is executing`)
+    this.logger.log(`🚀 CLI Application is executing`);
+    this.program.parse(process.argv.slice(2));
   }
 
   private registerCommands() {
@@ -39,12 +42,23 @@ export class CLIService {
       .name('GuitarShopCLI')
       .description('CLI service to generate mock data and fill database')
 
+    this.registerHelpCommand();
     this.registerGenerateCommand();
   }
 
+  private registerHelpCommand() {
+    this.program
+      .command('--help', { isDefault: true })
+      .description('Displays availible CLI commands list')
+      .action(() => {
+        this.logger.log('Running "Help" command no arguments passed to CLI');
+        this.program.outputHelp();
+      });
+  }
+
   private async registerGenerateCommand() {
-    await this.program
-      .command('generate')
+    this.program
+      .command('--generate')
       .argument('<n>', 'generate items count')
       .argument('<dbConnectionString>', 'correct PostgreSQL connection string')
       .action((itemsCount, connectionString) => {
@@ -54,9 +68,9 @@ export class CLIService {
         this.disconnectFromPostgreSQL();
 
         // Insert root user
-        this.connectToMongoDB()
+        this.connectToMongoDB();
         this.insertRootAdmin();
-        this.disconnectFromMongoDB()
+        this.disconnectFromMongoDB();
       })
   }
 
