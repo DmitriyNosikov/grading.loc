@@ -1,16 +1,12 @@
-#!/usr/bin/env node
-import 'reflect-metadata';
-import { CLIApplication } from './cli-application';
-import { Command } from './commands/command.interface';
-import { importCommands } from './import-commands';
+import { NestFactory } from '@nestjs/core';
+import { CLIModule } from './cli.module';
+import { CLIService } from './cli.service';
 
 async function bootstrap() {
-  const importedCommands: Command[] = await importCommands();
+  const app = await NestFactory.createApplicationContext(CLIModule);
+  const cliService = app.get(CLIService);
 
-  const application = new CLIApplication();
-
-  application.registrCommands(importedCommands);
-  application.executeCommand(process.argv);
+  cliService.execute();
 }
 
 bootstrap();

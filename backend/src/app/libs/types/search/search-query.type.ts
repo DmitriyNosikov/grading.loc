@@ -1,9 +1,9 @@
 import { Expose, Transform } from 'class-transformer';
 import { IsDateString, IsIn, IsNumber, IsOptional, IsString, Max } from 'class-validator';
+import { DEFAULT_PAGE_NUMBER, DEFAULT_SORT_DIRECTION, DEFAULT_SORT_TYPE, MAX_ITEMS_PER_PAGE } from '../../../product/product.constant';
 import { ProductTypeEnum, productTypeList } from '../product-type.enum';
-import { DEFAULT_PAGE_NUMBER, DEFAULT_SORT_DIRECTION, DEFAULT_SORT_TYPE, MAX_ITEMS_PER_PAGE } from '@backend/product/product.constant';
-import { SortDirection, SortDirectionEnum, SortType, SortTypeEnum } from './sort-type.enum';
 import { StringsCount } from '../strings-count.enum';
+import { SortDirection, SortDirectionEnum, SortType, SortTypeEnum } from './sort-type.enum';
 
 export class SearchQuery {
   @Expose()
