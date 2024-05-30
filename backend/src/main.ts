@@ -14,9 +14,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
 
+  // Запуск сервера
+  const globalPrefix = 'api';
+
   // Генерация Swagger-документации
   const swaggerConfig = new DocumentBuilder() // Настраиваем Swagger для формирования документации
   .setTitle('The "Guitar Shop" service')
+  .setBasePath(globalPrefix)
   .setDescription('Guitar Shop service API')
   .setVersion('1.0')
   .build();
@@ -24,11 +28,8 @@ async function bootstrap() {
 
   SwaggerModule.setup('spec', app, swaggerDocument);
 
-  // Генерация Spec.yml
+  // Генерация Spec.yml файла в директории /specification
   generateSpecYaml(swaggerDocument);
-
-  // Запуск сервера
-  const globalPrefix = 'api';
 
   app.setGlobalPrefix(globalPrefix);
   // Подключаем валидацию DTO на основе class-validator
@@ -44,6 +45,8 @@ async function bootstrap() {
   await app.listen(port, host);
 
   Logger.log(`🚀 Application is running on: http://${host}:${port}/${globalPrefix}`);
+  Logger.log(`📝 Swagger OperAPI documentation is available by link: http://${host}:${port}/spec`);
+  Logger.log(`⏬ Swagger OperAPI's YAML-format is available by link: http://${host}:${port}/spec-yaml`);
 }
 
 bootstrap();

@@ -20,6 +20,7 @@ const ErrorText = {
   DB_INIT: 'Can`t connect to MongoDB.',
   DB_CONNECTED: 'MongoDB has already connected.',
   DB_CANT_CONNECT: 'Unable to establish database connection after attempts count: ',
+  NOT_CONNECTED: 'MongoDB is not connected yet'
 } as const;
 
 export class MongoDatabaseClient implements DatabaseClient {
@@ -27,10 +28,6 @@ export class MongoDatabaseClient implements DatabaseClient {
   private isConnected: boolean;
 
   constructor(){ this.isConnected = false; }
-
-  private isDatabaseConnected() {
-    return this.isConnected;
-  }
 
   public async connect(uri: string) {
     if(this.isDatabaseConnected()) {
@@ -66,5 +63,18 @@ export class MongoDatabaseClient implements DatabaseClient {
     await this.mongooseConnection?.disconnect?.();
     this.isConnected = false;
     Logger.log(MessageText.DB_DISCONNECTED);
+  }
+
+  public getConnection(): Mongoose.Connection {
+    if(!this.isDatabaseConnected()) {
+      Logger.log(ErrorText.NOT_CONNECTED);
+      return;
+    }
+
+    return this.mongooseConnection.connection;
+  }
+
+  private isDatabaseConnected() {
+    return this.isConnected;
   }
 }

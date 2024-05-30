@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { resolve } from 'path';
-import { appConfig } from '../../config';
 import mongodbConfig from '../../config/mongodb/mongodb-config';
 import { BCryptHasher } from '../libs/helpers';
 import { CLIService } from './cli.service';
@@ -10,7 +9,7 @@ import { CLIService } from './cli.service';
   imports: [
     ConfigModule.forRoot({
       cache: true,
-      load: [appConfig, mongodbConfig],
+      load: [mongodbConfig],
       envFilePath: resolve('backend/.env'),
     }),
   ],

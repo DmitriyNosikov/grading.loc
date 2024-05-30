@@ -10,6 +10,7 @@ export function getMockAdmin() {
   return {
     name: 'admin',
     password: 'admin',
+    passwordHash: '',
     email: 'root@grading.loc'
   };
 };
