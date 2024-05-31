@@ -26,7 +26,4 @@ export const UserMessage: MessagesType = {
     FOUND: 'User found',
     DELETED: 'User has been successfully deleted',
   },
-  DESCRIPTION: {
-    USER_DETAIL: 'Get detail info about user',
-  },
 } as const;

@@ -6,8 +6,8 @@ GET https://jsonplaceholder.typicode.com/todos/1 HTTP/1.1
 Content-Type: application/json
 ###
 
-@userId = 6657a231f5de6cb3fe34a45f
-@authorization = Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU1YjNiN2FmYmYwNWQzYjUxM2RmNzEiLCJlbWFpbCI6Imlyb24tbWFuQHN0YXJraW5kdXN0cmllcy5pdCIsIm5hbWUiOiJUb255IiwiaWF0IjoxNzE3MDcxNjU1LCJleHAiOjE3MTcwNzIyNTV9.Ln164Uw1f2tv-rYKsnWo7rJuBQxrvJAEXYnkv1yYqpw
+@userId = 665a2e4fc0772d685973c676
+@authorization = Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjVhMmYxZDRhNzI4Y2UxZDMxYzRlZjciLCJlbWFpbCI6Imlyb24tbWFuQHN0YXJraW5kdXN0cmllcy5pdCIsIm5hbWUiOiJUb255IiwiaWF0IjoxNzE3MTg3MTYyLCJleHAiOjE3MTcxODc3NjJ9.XiZjEsoCv6W1qOhO2pCPva5uiLjNd2XesjftBDSIKVA
 
 # /////////////////////////////////// AUTNENTICATION ///////////////////////////////////
 
@@ -41,7 +41,7 @@ POST {{baseUrl}}/check/ HTTP/1.1
 # /////////////////////////////////// USER ///////////////////////////////////
 
 # Get detail info about user
-POST {{baseUrl}}/users/ HTTP/1.1
+GET  {{baseUrl}}/{{userId}} HTTP/1.1
 Content-Type: application/json
 
 {
@@ -50,5 +50,5 @@ Content-Type: application/json
 ###
 
 # Delete user
-DELETE {{baseUrl}}/users/{{userId}} HTTP/1.1
+DELETE {{baseUrl}}/{{userId}} HTTP/1.1
 ###

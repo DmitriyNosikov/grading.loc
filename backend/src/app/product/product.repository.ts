@@ -1,12 +1,12 @@
 import { BasePostgresRepository } from '@backend/libs/data-access';
-import { Injectable } from '@nestjs/common';
-import { ProductEntity } from './product.entity';
 import { ProductInterface } from '@backend/libs/interfaces';
-import { ProductFactory } from './product.factory';
-import { PrismaClientService } from '../prisma-client/prisma-client.service';
 import { PaginationResult, SearchFilters, SearchQuery, SortDirectionEnum, SortType, SortTypeEnum } from '@backend/libs/types';
-import { DEFAULT_SORT_DIRECTION, DEFAULT_SORT_TYPE, MAX_ITEMS_PER_PAGE } from './product.constant';
+import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { PrismaClientService } from '../prisma-client/prisma-client.service';
+import { DEFAULT_SORT_DIRECTION, DEFAULT_SORT_TYPE, MAX_ITEMS_PER_PAGE } from './product.constant';
+import { ProductEntity } from './product.entity';
+import { ProductFactory } from './product.factory';
 
 @Injectable()
 export class ProductRepository extends BasePostgresRepository<ProductEntity, ProductInterface> {

@@ -8,8 +8,6 @@ import { getMongooseOptions } from './libs/helpers';
 
 import { UserModule } from './user/user.module';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ProductModule } from './product/product.module';
 
 @Module({
@@ -30,7 +28,7 @@ import { ProductModule } from './product/product.module';
     UserModule,
     ProductModule
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

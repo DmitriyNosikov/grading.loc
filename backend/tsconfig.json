@@ -1,27 +1,23 @@
 {
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
+    "target": "es2015",
     "module": "commonjs",
-    "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "ES2021",
-    "sourceMap": true,
+    "moduleResolution": "node",
+    "lib": ["es2022", "dom"],
     "outDir": "./dist",
+    // "rootDir": ".",
+    "sourceMap": true,
+
+    "declaration": true,
     "incremental": true,
-    "skipLibCheck": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "baseUrl": ".",
-    "paths": {
-      "@shared/*": ["../shared/*"],
-      "@backend/user/*": ["src/app/user/*"],
-      "@backend/product/*": ["src/app/product/*"],
-      "@backend/libs/*": ["src/app/libs/*"],
-    }
-  }
+  },
+  "exclude": [
+    "./dist/**/*"
+  ]
 }

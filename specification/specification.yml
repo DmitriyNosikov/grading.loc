@@ -1,15 +1,9 @@
 openapi: 3.0.0
 paths:
-  /:
-    get:
-      operationId: AppController_getHello
-      parameters: []
-      responses:
-        "200":
-          description: ""
   /users/register:
     post:
       operationId: UserController_create
+      summary: Register new user
       parameters: []
       requestBody:
         required: true
@@ -31,6 +25,7 @@ paths:
   /users/login:
     post:
       operationId: UserController_login
+      summary: Login user by passed credentials
       parameters: []
       requestBody:
         required: true
@@ -51,16 +46,22 @@ paths:
   /users/check:
     post:
       operationId: UserController_checkToken
+      summary: Check user`s JWT-Token
       parameters: []
       responses:
         "201":
           description: ""
       tags: *a1
-  /users:
-    post:
+  /users/{userId}:
+    get:
       operationId: UserController_show
       summary: Get detail info about user
-      parameters: []
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
       responses:
         "200":
           description: User found
@@ -71,9 +72,9 @@ paths:
         "404":
           description: User not found
       tags: *a1
-  /users/{userId}:
     delete:
       operationId: UserController_deleteUser
+      summary: Delete user
       parameters:
         - name: userId
           required: true

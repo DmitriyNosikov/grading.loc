@@ -18,7 +18,15 @@ export class SearchQuery {
   public type?: ProductTypeEnum;
 
   @Expose()
-  @Transform(({ value }) => { (value === undefined) ? undefined : Number(value) })
+  @Transform(({ value }) => {
+    const stringsCount = Number(value);
+
+    if((value === undefined) || isNaN(stringsCount)) {
+      return undefined;
+    }
+
+    return stringsCount;
+  })
   @IsIn(Object.values(StringsCount))
   @IsNumber()
   @IsOptional()
