@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
+import { TokenInterface } from '@backend/libs/interfaces';
 import { UserRDO } from './user.rdo';
-import { TokenInterface } from '../../libs/interfaces';
 
 
 export class LoggedUserRDO extends UserRDO implements TokenInterface{

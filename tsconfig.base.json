@@ -2,7 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     // Dirs
-    "rootDir": ".",
+    // "rootDir": ".",
     "baseUrl": ".",
     "sourceMap": true,
 
@@ -38,9 +38,10 @@
     /* Paths */
     "paths": {
       "@shared/*": ["shared/*"],
-      "@backend/libs/*": ["backend/src/app/libs/*"],
+      "@backend/user/*": ["backend/src/app/user/*"],
       "@backend/product/*": ["backend/src/app/product/*"],
-    }
+      "@backend/libs/*": ["backend/src/app/libs/*"],
+    },
   },
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules"]
 }

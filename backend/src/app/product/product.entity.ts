@@ -1,7 +1,7 @@
 
+import { Entity } from '@backend/libs/entities';
+import { StorableEntityInterface } from '@backend/libs/interfaces';
 import { ProductInterface } from '@backend/libs/interfaces/product/product.interface';
-import { StorableEntityInterface } from '../libs/interfaces';
-import { Entity } from '../libs/entities';
 import { ProductTypeEnum } from '@backend/libs/types';
 
 export class ProductEntity extends Entity implements StorableEntityInterface<ProductInterface> {

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, HttpStatus, Post, UseGuards, Req } from '@nestjs/common';
+import { Body, Controller, Delete, HttpStatus, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { fillDTO } from '../libs/helpers';
@@ -9,15 +9,13 @@ import { RequestWithUser } from './interfaces/request-with-user.interface';
 import { UserMessage } from './user.constant';
 import { UserService } from './user.service';
 
-import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JWTAuthGuard } from './guards/jwt-auth.guard';
+import { LocalAuthGuard } from './guards/local-auth.guard';
 
-import { UserRDO } from './rdo/user.rdo';
-import { LoggedUserRDO } from './rdo/logged-user.rdo';
-import { LoginUserDTO } from './dto/login-user.dto';
-import { CreateUserDTO } from './dto/create-user.dto';
-
-
+import { CreateUserDTO } from '@shared/user/dto/create-user.dto';
+import { LoginUserDTO } from '@shared/user/dto/login-user.dto';
+import { LoggedUserRDO } from '@shared/user/rdo/logged-user.rdo';
+import { UserRDO } from '@shared/user/rdo/user.rdo';
 @ApiTags('users')
 @Controller('users')
 export class UserController {

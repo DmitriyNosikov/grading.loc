@@ -1,17 +1,17 @@
 import { ConflictException, HttpException, HttpStatus, Inject, Injectable, Logger, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
-import { BCryptHasher, validateMongoID, getJWTPayload } from '../libs/helpers';
-import { SendMailService } from '../send-mail/send-mail.service';
+import { BCryptHasher, getJWTPayload, validateMongoID } from '../libs/helpers';
 import { UserInterface } from '../libs/interfaces';
+import { SendMailService } from '../send-mail/send-mail.service';
 
 import { UserMessage } from './user.constant';
 import { UserEntity } from './user.entity';
 import { UserFactory } from './user.factory';
 import { UserRepository } from './user.repository';
 
-import { CreateUserDTO } from './dto/create-user.dto';
-import { LoginUserDTO } from './dto/login-user.dto';
+import { CreateUserDTO } from '@shared/user/dto/create-user.dto';
+import { LoginUserDTO } from '@shared/user/dto/login-user.dto';
 
 @Injectable()
 export class UserService {

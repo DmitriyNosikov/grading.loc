@@ -1,10 +1,14 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
-import { ApiBody, ApiHeader, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CreateProductDTO } from '@backend/product/dto/create-product.dto';
-import { CreateProductRDO } from '@backend/product/rdo/create-product.rdo';
 import { fillDTO } from '@backend/libs/helpers';
 import { SearchQuery, SortDirection, SortType, StringsCount } from '@backend/libs/types';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import { ApiBody, ApiHeader, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+import { CreateProductDTO } from '@shared/product/dto/create-product.dto';
+import { UpdateProductDTO } from '@shared/product/dto/update-product.dto';
+import { CreateProductRDO } from '@shared/product/rdo/create-product.rdo';
+import { ProductWithPaginationRDO } from '@shared/product/rdo/product-with-pagination.rdo';
+
+import { JWTAuthGuard } from '../user/guards/jwt-auth.guard';
 import {
   DEFAULT_PAGE_NUMBER,
   DEFAULT_SORT_DIRECTION,
@@ -12,10 +16,7 @@ import {
   MAX_ITEMS_PER_PAGE,
   ProductMessage
 } from './product.constant';
-import { JWTAuthGuard } from '../user/guards/jwt-auth.guard';
 import { ProductService } from './product.service';
-import { ProductWithPaginationRDO } from './rdo/product-with-pagination.rdo';
-import { UpdateProductDTO } from './dto/update-product.dto';
 
 @ApiTags('products')
 @ApiHeader({
