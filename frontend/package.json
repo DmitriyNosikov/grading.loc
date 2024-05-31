@@ -1,5 +1,5 @@
 {
-  "name": "Guitar-shop",
+  "name": "GuitarShop",
   "version": "4.0.0",
   "type": "module",
   "scripts": {
@@ -29,7 +29,7 @@
     "@testing-library/user-event": "14.4.3",
     "@types/faker": "5.5.9",
     "@types/leaflet": "1.9.3",
-    "@types/react": "18.2.14",
+    "@types/react": "18.2.25",
     "@types/react-dom": "18.2.6",
     "@types/react-redux": "7.1.25",
     "@types/testing-library__jest-dom": "5.14.6",

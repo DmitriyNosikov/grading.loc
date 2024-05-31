@@ -9,5 +9,5 @@ export default function Page404(): ReactElement {
         <button className="button button__error button--small button--black-border">Продолжить покупки</button>
       </section>
     </div>
-  )
+  );
 }

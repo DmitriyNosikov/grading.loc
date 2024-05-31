@@ -6,5 +6,5 @@ export default function Layout(): ReactElement {
     <main className="page-content">
       <Outlet />
     </main>
-  )
+  );
 }
