@@ -11,10 +11,13 @@ import AddProduct from '../../pages/add-product/add-product';
 import EditProduct from '../../pages/edit-product/edit-product';
 import OnlyUnauthorizedRoute from '../only-unauthorized-route/only-unauthorized-route';
 import Registration from '../../pages/registration/registration';
+import ScrollToTop from '../scroll-to-top/scroll-to-top';
 
 export default function App(): ReactElement {
   return (
     <BrowserRouter>
+      <ScrollToTop />
+
       <Routes>
         <Route path={AppRoute.MAIN} element={<Layout />} >
           <Route index element={

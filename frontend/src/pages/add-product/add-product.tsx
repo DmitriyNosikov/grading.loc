@@ -2,8 +2,22 @@ import { ReactElement } from 'react';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumds';
 import SelectProductType from '../../components/select-product-type/select-product-type';
 import SelectStringsCount from '../../components/select-strings-count/select-strings-count';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { AppRoute } from '../../../const';
+import { getPaddedNum } from '../../utils/common';
 
 export default function AddProduct(): ReactElement {
+  const navigate = useNavigate();
+
+  const date = new Date();
+  const day = getPaddedNum(date.getDate());
+  const month = getPaddedNum(date.getMonth());
+  const currentDate = `${day}.${month}.${date.getFullYear()}`;
+
+  function handleReturnBtnClick() {
+    navigate(AppRoute.MAIN);
+  }
+
   return (
     <section className="add-item">
       <div className="container">
@@ -32,7 +46,7 @@ export default function AddProduct(): ReactElement {
           <div className="add-item__form-right">
             <div className="custom-input add-item__form-input">
               <label><span>Дата добавления товара</span>
-                <input type="text" name="date" value="" placeholder="Дата в формате 00.00.0000" />
+                <input type="text" name="date" value={currentDate} placeholder="Дата в формате 00.00.0000" />
               </label>
               <p>Заполните поле</p>
             </div>
@@ -64,7 +78,7 @@ export default function AddProduct(): ReactElement {
 
           <div className="add-item__form-buttons-wrap">
             <button className="button button--small add-item__form-button" type="submit">Сохранить изменения</button>
-            <button className="button button--small add-item__form-button" type="button">Вернуться к списку товаров</button>
+            <button className="button button--small add-item__form-button" type="button" onClick={handleReturnBtnClick}>Вернуться к списку товаров</button>
           </div>
         </form>
       </div>
