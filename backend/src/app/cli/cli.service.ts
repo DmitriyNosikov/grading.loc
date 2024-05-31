@@ -43,6 +43,7 @@ export class CLIService {
     this.program
       .name('GuitarShopCLI')
       .description('CLI service to generate mock data and fill database')
+      .passThroughOptions()
 
     this.registerHelpCommand();
     this.registerGenerateCommand();
@@ -50,7 +51,8 @@ export class CLIService {
 
   private registerHelpCommand() {
     this.program
-      .command('help', { isDefault: true })
+      .command('--help', { isDefault: true })
+      .alias('help')
       .description('Displays availible CLI commands list')
       .action(() => {
         this.logger.log('Running "Help" command ...');
@@ -63,7 +65,8 @@ export class CLIService {
 
   private async registerGenerateCommand() {
     this.program
-      .command('generate')
+      .command('--generate')
+      .alias('generate')
       .argument('<n>', 'generate items count')
       .argument('<dbConnectionString>', 'correct PostgreSQL connection string')
       .action(async (itemsCount, connectionString) => {
