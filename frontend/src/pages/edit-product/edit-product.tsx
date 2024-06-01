@@ -1,20 +1,20 @@
 import { ProductTypeEnum } from '@backend/libs/types';
+import Breadcrumbs from '@frontend/src/components/breadcrumbs/breadcrumds';
+import SelectProductType from '@frontend/src/components/select-product-type/select-product-type';
+import SelectStringsCount from '@frontend/src/components/select-strings-count/select-strings-count';
 import Spinner from '@frontend/src/components/spinner/spinner';
 import { AppRoute } from '@frontend/src/const';
-import useProductItem from '@frontend/src/hooks/useProductItem';
+import useProductDetail from '@frontend/src/hooks/useProductDetail';
 import { store } from '@frontend/src/store';
 import { updateProductItemAction } from '@frontend/src/store/actions/api-action';
 import { getFormattedDate } from '@frontend/src/utils/common';
 import { CreateProductRDO } from '@shared/product';
 import { ReactElement, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import Breadcrumbs from '../../components/breadcrumbs/breadcrumds';
-import SelectProductType from '../../components/select-product-type/select-product-type';
-import SelectStringsCount from '../../components/select-strings-count/select-strings-count';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function EditProduct(): ReactElement {
-  const productId = String(useParams().id);
-  const productDetail = useProductItem({ productId });
+  const productDetail = useProductDetail();
   const navigate = useNavigate();
 
   const [type, setType] = useState(productDetail?.type);

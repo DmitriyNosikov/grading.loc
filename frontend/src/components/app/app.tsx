@@ -10,7 +10,10 @@ import Registration from '../../pages/registration/registration';
 import Layout from '../layout/layout';
 import OnlyUnauthorizedRoute from '../only-unauthorized-route/only-unauthorized-route';
 import PrivateRoute from '../private-route/private-route';
+import ProductDetail from '../product-detail/product-detail';
 import ProductsList from '../products-list/products-list';
+
+// TODO: Нужен Helmet для смены заголвоков
 
 export default function App(): ReactElement {
   return (
@@ -35,10 +38,12 @@ export default function App(): ReactElement {
         }/>
 
         <Route path={AppRoute.PRODUCTS} element={
-            <PrivateRoute redirectTo={AppRoute.LOGIN}>
-              <ProductsList />
-            </PrivateRoute>
-          } />
+          <PrivateRoute redirectTo={AppRoute.LOGIN}>
+            <ProductsList />
+          </PrivateRoute>
+        } />
+
+        <Route path={`${AppRoute.PRODUCTS}/:id`} element={<ProductDetail />} />
 
         <Route path={`${AppRoute.ADD_PRODUCT}`} element={
           <PrivateRoute redirectTo={AppRoute.LOGIN}>
