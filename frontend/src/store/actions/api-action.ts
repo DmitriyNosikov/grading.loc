@@ -155,9 +155,10 @@ export const updateProductItemAction = createAsyncThunk<void, Partial<CreateProd
 
     try {
       const { data } = await api.patch<CreateProductRDO>(`${ApiRoute.PRODUCT_API}/${updateData.id}`, adaptedData);
+      const serverAdaptedData = adaptProductToClient(data);
 
-      dispatch(updateProductsListAction(data)); // Обноавляем итем в списке
-      dispatch(setProductItemAction(data)); // Обноавляем итем в списке
+      dispatch(updateProductsListAction(serverAdaptedData)); // Обноавляем итем в списке
+      dispatch(setProductItemAction(serverAdaptedData)); // Обноавляем итем в списке
 
       toast.success(`Product ${updateData.id} was successfully updated`);
     } catch(err) {

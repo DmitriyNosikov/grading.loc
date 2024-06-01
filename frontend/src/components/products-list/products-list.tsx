@@ -7,6 +7,8 @@ import Spinner from '../spinner/spinner';
 export default function ProductsList(): ReactElement {
   const paginatedProductsList = useAppSelector(getProducts);
 
+  console.log('PRODUCTS LIST: ', paginatedProductsList);
+
   if(!paginatedProductsList ?? paginatedProductsList.totalItems <= 0) {
     return <Spinner />;
   }

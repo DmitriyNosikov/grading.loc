@@ -20,13 +20,12 @@ export default function EditProduct(): ReactElement {
   const [type, setType] = useState(productDetail?.type);
   const [stringsCount, setStringsCount] = useState(productDetail?.stringsCount);
 
-  const productType = type ?? productDetail?.type;
-  const productStringsCount = stringsCount ?? productDetail?.stringsCount;
-
   if(!productDetail) {
     return <Spinner />;
   }
 
+  const productType = type ?? productDetail?.type;
+  const productStringsCount = stringsCount ?? productDetail?.stringsCount;
   const productDate = productDetail.createdAt ? getFormattedDate(new Date(productDetail.createdAt)) : '';
 
   function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
