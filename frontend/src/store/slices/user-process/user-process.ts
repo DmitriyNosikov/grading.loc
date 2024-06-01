@@ -44,10 +44,6 @@ export const userProcess = createSlice({
       .addCase(loginAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NO_AUTH;
       })
-      // Логаута пока нет
-      // .addCase(logoutAction.fulfilled, (state) => {
-      //   state.authorizationStatus = AuthorizationStatus.NO_AUTH;
-      // });
   },
 });
 

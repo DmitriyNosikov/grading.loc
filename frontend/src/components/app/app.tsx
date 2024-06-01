@@ -51,9 +51,9 @@ export default function App(): ReactElement {
             <EditProduct />
           </PrivateRoute>
         }/>
-      </Route>
 
-      <Route path="*" element={<Page404 />} />
+        <Route path="*" element={<Page404 />} />
+      </Route>
     </Routes>
   );
 }

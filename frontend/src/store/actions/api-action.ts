@@ -5,7 +5,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 
 import { CreateProductRDO, ProductWithPaginationRDO } from '@shared/product';
-import { LoggedUserRDO, LoginUserDTO } from '@shared/user';
+import { CreateUserDTO, LoggedUserRDO, LoginUserDTO } from '@shared/user';
 
 // Actions from slices
 import { adaptProductToClient, adaptProductToServer, adaptProductsToClient } from '@frontend/src/utils/adapters';
@@ -59,6 +59,20 @@ export const checkAuthAction = createAsyncThunk<void, void, AsyncOptions>(
 
       dispatch(setUserInfoAction(null));
     }
+  }
+);
+
+export const registerAction = createAsyncThunk<void, CreateUserDTO, AsyncOptions>(
+  APIAction.USER_REGISTER,
+  async (
+    newUserData, // New User Data
+    { dispatch, extra: api } // AsyncOptions
+  ) => {
+    await api.post<LoggedUserRDO>(ApiRoute.REGISTER, newUserData);
+
+    toast.success(`User ${newUserData.email} has been successfully registered`);
+
+    dispatch(redirectToRoute(AppRoute.LOGIN));
   }
 );
 

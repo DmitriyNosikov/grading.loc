@@ -70,6 +70,5 @@ export const {
   setProductsLoadingStatus,
   updateProductsListAction,
   setProductItemAction,
-  updateProductItemAction,
   deleteProductItemAction
 } = productsDataProcess.actions;

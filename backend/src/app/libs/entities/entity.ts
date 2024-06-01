@@ -1,5 +1,5 @@
 export abstract class Entity {
-  private _id: string;
+  private _id!: string;
 
   get id(): string {
     return this._id;

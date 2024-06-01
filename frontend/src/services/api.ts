@@ -17,7 +17,8 @@ const StatusCodesMap = [
   StatusCodes.BAD_REQUEST,
   StatusCodes.UNAUTHORIZED,
   StatusCodes.NOT_FOUND,
-  StatusCodes.BAD_GATEWAY
+  StatusCodes.BAD_GATEWAY,
+  StatusCodes.CONFLICT,
 ] as const;
 
 type DetailMessage = {
