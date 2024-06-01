@@ -8,7 +8,7 @@ export class LoginUserDTO {
     example: 'iron-man@starkindustries.it',
   })
   @IsString()
-  email: string;
+  email!: string;
 
   @ApiProperty({
     description: 'User password',
@@ -19,5 +19,5 @@ export class LoginUserDTO {
   @MaxLength(UserValidation.PASSWORD.MAX_LENGTH)
   @MinLength(UserValidation.PASSWORD.MIN_LENGTH)
   @IsString()
-  password: string;
+  password!: string;
 }

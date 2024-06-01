@@ -1,6 +1,8 @@
-import { AppRoute } from '../../../const';
+import { useAppSelector } from '@frontend/src/hooks';
+import { getAuthStatus } from '@frontend/src/store/slices/user-process/user-process.selectors';
 import { ReactElement } from 'react';
 import { Navigate } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
 
 type PrivateRouteProps = {
   redirectTo?: typeof AppRoute[keyof typeof AppRoute],
@@ -8,7 +10,8 @@ type PrivateRouteProps = {
 };
 
 export default function PrivateRoute({ redirectTo = AppRoute.PAGE_404, children }: PrivateRouteProps): ReactElement {
-  const isUserAuthorized = true;
+  const authStatus = useAppSelector(getAuthStatus);
+  const isUserAuthorized = (authStatus === AuthorizationStatus.AUTH);
 
   return (
     (isUserAuthorized)

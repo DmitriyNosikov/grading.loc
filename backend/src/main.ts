@@ -7,8 +7,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigEnvironment } from './config/config.constant';
 import { ConfigEnum } from './config/config.schema';
 
-import { AppModule } from './app/app.module';
 import { generateSpecYaml } from '@backend/libs/helpers';
+import { AppModule } from './app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -32,12 +32,16 @@ async function bootstrap() {
   generateSpecYaml(swaggerDocument);
 
   app.setGlobalPrefix(globalPrefix);
+
   // Подключаем валидацию DTO на основе class-validator
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true, // + трансформация типов данных на основе DTO
     }),
   );
+
+  // Разрешаем CORS запросы
+  app.enableCors();
 
   const host = configService.get(`${ConfigEnvironment.APP}.${ConfigEnum.HOST}`);
   const port = configService.get(`${ConfigEnvironment.APP}.${ConfigEnum.PORT}`);

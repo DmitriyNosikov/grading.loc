@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
-import { AppRoute } from '../../../const';
 import { Navigate } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 type UnauthorizedRouteProps = {
   redirectTo?: typeof AppRoute[keyof typeof AppRoute],

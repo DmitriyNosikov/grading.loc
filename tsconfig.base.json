@@ -7,10 +7,7 @@
     "sourceMap": true,
 
     // Modules
-    "target": "es2015",
-    "module": "esnext",
     "moduleResolution": "node",
-    "lib": ["es2020", "dom"],
     "esModuleInterop": true,
     "resolveJsonModule": true,
 
@@ -20,7 +17,6 @@
     "allowSyntheticDefaultImports": true,
 
     "importHelpers": true,
-    "declaration": false,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "removeComments": true,
@@ -41,6 +37,7 @@
       "@backend/user/*": ["backend/src/app/user/*"],
       "@backend/product/*": ["backend/src/app/product/*"],
       "@backend/libs/*": ["backend/src/app/libs/*"],
+      "@frontend/src/*": ["frontend/src/*"]
     },
   },
   "exclude": ["node_modules"]

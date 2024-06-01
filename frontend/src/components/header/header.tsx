@@ -1,6 +1,6 @@
-import { AppRoute } from '../../../const';
 import { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 export default function Header(): ReactElement {
   const isUserAuthorized = false;

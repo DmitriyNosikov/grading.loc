@@ -1,4 +1,4 @@
-import { Namespace } from '../../const';
+import { Namespace } from '../const';
 
 export type Namespace = keyof [keyof typeof Namespace];
 export type MainNamespace = typeof Namespace.MAIN;

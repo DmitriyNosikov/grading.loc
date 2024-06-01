@@ -1,4 +1,8 @@
 // ROUTES
+
+import { BASE_URL } from './services/api';
+
+// -- App
 export const AppRoute = {
   MAIN: '/',
   LOGIN: '/login',
@@ -8,6 +12,15 @@ export const AppRoute = {
   EDIT_PRODUCT: '/edit-product',
   PAGE_404: '/page404',
 } as const;
+
+// -- Backend API
+const backendUsersAPI = `${BASE_URL}/api/users`;
+const backendProductsAPI = `${BASE_URL}/api/products`;
+export const ApiRoute = {
+  REGISTER: `${backendUsersAPI}/register`,
+  LOGIN: `${backendUsersAPI}/login`
+} as const;
+
 
 // STATE NAMESPACES
 export const Namespace = {

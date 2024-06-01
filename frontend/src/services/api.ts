@@ -1,12 +1,14 @@
-import axios, { AxiosInstance, AxiosError } from 'axios';
-import { toast } from 'react-toastify';
+import axios, { AxiosError, AxiosInstance } from 'axios';
 import { StatusCodes } from 'http-status-codes';
+import { toast } from 'react-toastify';
 import { getToken } from './token';
 
-const HOST = 'localhost';
-const PORT = 8000;
+export const HOST = '127.0.0.1';
+export const PORT = 8000;
+export const BASE_URL = `http://${HOST}:${PORT}`;
+
 const TIMEOUT = 5000;
-const BASE_URL = `http://${HOST}:${PORT}`;
+
 const ERROR_TEXT = {
   NOT_AUTHORIZED: 'You aren`t authorized',
 } as const;

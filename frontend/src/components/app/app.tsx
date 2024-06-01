@@ -1,16 +1,16 @@
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import { AppRoute } from '../../../const';
-import Layout from '../layout/layout';
-import Page404 from '../../pages/page404/page404';
 import { ReactElement } from 'react';
-import PrivateRoute from '../private-route/private-route';
-import ProductsList from '../products-list/products-list';
-import Login from '../../pages/login/login';
-import Main from '../../pages/main/main';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import AddProduct from '../../pages/add-product/add-product';
 import EditProduct from '../../pages/edit-product/edit-product';
-import OnlyUnauthorizedRoute from '../only-unauthorized-route/only-unauthorized-route';
+import Login from '../../pages/login/login';
+import Main from '../../pages/main/main';
+import Page404 from '../../pages/page404/page404';
 import Registration from '../../pages/registration/registration';
+import Layout from '../layout/layout';
+import OnlyUnauthorizedRoute from '../only-unauthorized-route/only-unauthorized-route';
+import PrivateRoute from '../private-route/private-route';
+import ProductsList from '../products-list/products-list';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 
 export default function App(): ReactElement {

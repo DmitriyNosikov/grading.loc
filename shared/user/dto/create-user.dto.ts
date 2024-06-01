@@ -12,14 +12,14 @@ export class CreateUserDTO {
   @MaxLength(UserValidation.NAME.MAX_LENGTH)
   @MinLength(UserValidation.NAME.MIN_LENGTH)
   @IsString()
-  name: string;
+  name!: string;
 
   @ApiProperty({
     description: 'User email',
     example: 'iron-man@starkindustries.it',
   })
   @IsEmail()
-  email: string;
+  email!: string;
 
   @ApiProperty({
     description: 'User password',
@@ -30,5 +30,5 @@ export class CreateUserDTO {
   @MaxLength(UserValidation.PASSWORD.MAX_LENGTH)
   @MinLength(UserValidation.PASSWORD.MIN_LENGTH)
   @IsString()
-  password: string;
+  password!: string;
 }

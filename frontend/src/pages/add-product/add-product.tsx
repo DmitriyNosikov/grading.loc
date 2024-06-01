@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumds';
 import SelectProductType from '../../components/select-product-type/select-product-type';
 import SelectStringsCount from '../../components/select-strings-count/select-strings-count';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../../const';
+import { AppRoute } from '../../const';
 import { getPaddedNum } from '../../utils/common';
 
 export default function AddProduct(): ReactElement {
