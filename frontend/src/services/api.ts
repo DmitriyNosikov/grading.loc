@@ -70,6 +70,10 @@ export function createAPI(): AxiosInstance {
           toast.warn(messageText);
         }
 
+        if(Array.isArray(messageText)) {
+          messageText.forEach((message) => toast.warn(message));
+        }
+
         if(details && details.length > 0) {
           details.forEach((detail) => {
             if(detail.messages) {

@@ -1,8 +1,12 @@
+import { ProductTypeEnum } from '@backend/libs/types';
 import Spinner from '@frontend/src/components/spinner/spinner';
 import { AppRoute } from '@frontend/src/const';
 import useProductItem from '@frontend/src/hooks/useProductItem';
+import { store } from '@frontend/src/store';
+import { updateProductItemAction } from '@frontend/src/store/actions/api-action';
 import { getFormattedDate } from '@frontend/src/utils/common';
-import { ReactElement } from 'react';
+import { CreateProductRDO } from '@shared/product';
+import { ReactElement, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumds';
 import SelectProductType from '../../components/select-product-type/select-product-type';
@@ -13,27 +17,51 @@ export default function EditProduct(): ReactElement {
   const productDetail = useProductItem({ productId });
   const navigate = useNavigate();
 
+  const [type, setType] = useState(productDetail?.type);
+  const [stringsCount, setStringsCount] = useState(productDetail?.stringsCount);
+
+  const productType = type ?? productDetail?.type;
+  const productStringsCount = stringsCount ?? productDetail?.stringsCount;
+
   if(!productDetail) {
     return <Spinner />;
   }
 
   const productDate = productDetail.createdAt ? getFormattedDate(new Date(productDetail.createdAt)) : '';
-  const productType = adaptType(productDetail.type);
 
-  function handleSaveBtnClick() {
-    console.log('Saving is not implemented yet');
+  function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const updateProductData: Partial<CreateProductRDO> = {
+      id: productDetail?.id ?? undefined,
+      title: String(formData.get('title')),
+      type: String(formData.get('item-type')) as ProductTypeEnum,
+      description: String(formData.get('description')),
+      photo: productDetail?.photo ?? '',
+      price: Number(formData.get('price')),
+      stringsCount: Number(formData.get('string-qty')),
+    };
+
+    store.dispatch(updateProductItemAction(updateProductData));
+  }
+
+  function handleTypeChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const target = e.target;
+
+    setType(target.value as ProductTypeEnum);
+  }
+
+  function handleStringsCountChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const target = e.target;
+
+    setStringsCount(Number(target.value));
   }
 
   function handleReturnBtnClick() {
     navigate(AppRoute.MAIN);
-  }
-
-  function adaptType(type: string) {
-    switch(type) {
-      case('acoustic'): return 'guitar';
-      case('electro'): return 'el-guitar';
-      case('ukulele'): return 'ukulele';
-    }
   }
 
   return (
@@ -43,7 +71,7 @@ export default function EditProduct(): ReactElement {
 
         <Breadcrumbs />
 
-        <form className="edit-item__form" action="#" method="get">
+        <form className="edit-item__form" action="#" method="get" onSubmit={handleFormSubmit}>
           <div className="edit-item__form-left">
             <div className="edit-item-image edit-item__form-image">
               <div className="edit-item-image__image-wrap">
@@ -56,44 +84,44 @@ export default function EditProduct(): ReactElement {
               </div>
             </div>
 
-            <SelectProductType selectedValue={productType} additionalClassName='edit-item__form-radio' onChangeHandler={ console.log } />
+            <SelectProductType selectedValue={productType} additionalClassName='edit-item__form-radio' onChangeHandler={handleTypeChange} />
 
-            <SelectStringsCount selectedValue={Number(productDetail.stringsCount)} additionalClassName='edit-item__form-radio' onChangeHandler={ console.log } />
+            <SelectStringsCount selectedValue={Number(productStringsCount)} additionalClassName='edit-item__form-radio' onChangeHandler={handleStringsCountChange} />
           </div>
           <div className="edit-item__form-right">
             <div className="custom-input edit-item__form-input">
               <label><span>Дата добавления товара</span>
-                <input type="text" name="date" value={productDate} placeholder="Дата в формате 00.00.0000"/>
+                <input type="text" name="date" defaultValue={productDate} placeholder="Дата в формате 00.00.0000"/>
               </label>
               <p>Заполните поле</p>
             </div>
             <div className="custom-input edit-item__form-input">
               <label><span>Наименование товара</span>
-                <input type="text" name="title" value={productDetail.title} placeholder="Наименование"/>
+                <input type="text" name="title" defaultValue={productDetail.title} placeholder="Наименование"/>
               </label>
               <p>Заполните поле</p>
             </div>
             <div className="custom-input edit-item__form-input edit-item__form-input--price">
               <label><span>Цена товара</span>
-                <input type="text" name="price" value={productDetail.price} placeholder="Цена в формате 00 000"/>
+                <input type="text" name="price" defaultValue={productDetail.price} placeholder="Цена в формате 00 000"/>
               </label>
               <p>Заполните поле</p>
             </div>
             <div className="custom-input edit-item__form-input">
               <label><span>Артикул товара</span>
-                <input type="text" name="sku" value={productDetail.vendorCode} placeholder="Артикул товара"/>
+                <input type="text" name="sku" defaultValue={productDetail.vendorCode} placeholder="Артикул товара"/>
               </label>
               <p>Заполните поле</p>
             </div>
             <div className="custom-textarea edit-item__form-textarea">
               <label><span>Описание товара</span>
-                <textarea name="description" placeholder="">{productDetail.description}</textarea>
+                <textarea name="description" placeholder="" defaultValue={productDetail.description}/>
               </label>
               <p>Заполните поле</p>
             </div>
           </div>
           <div className="edit-item__form-buttons-wrap">
-            <button className="button button--small edit-item__form-button" type="submit" onClick={handleSaveBtnClick}>Сохранить изменения</button>
+            <button className="button button--small edit-item__form-button" type="submit">Сохранить изменения</button>
             <button className="button button--small edit-item__form-button" type="button" onClick={handleReturnBtnClick}>Вернуться к списку товаров</button>
           </div>
         </form>

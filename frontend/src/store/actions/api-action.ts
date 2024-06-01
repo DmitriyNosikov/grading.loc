@@ -8,8 +8,10 @@ import { CreateProductRDO, ProductWithPaginationRDO } from '@shared/product';
 import { LoggedUserRDO, LoginUserDTO } from '@shared/user';
 
 // Actions from slices
+import { adaptProductToClient, adaptProductToServer, adaptProductsToClient } from '@frontend/src/utils/adapters';
+import { toast } from 'react-toastify';
 import { redirectToRoute } from '../middlewares/redirect-action';
-import { setProductItemAction, setProductsAction } from '../slices/product-process/product-process';
+import { setProductItemAction, setProductsAction, updateProductsListAction } from '../slices/product-process/product-process';
 import { setUserInfoAction } from '../slices/user-process/user-process';
 
 // Async actions names
@@ -101,6 +103,8 @@ export const fetchProductsAction = createAsyncThunk<void, void, AsyncOptions>(
   async (_arg, { dispatch, extra: api }) => {
     const { data } = await api.get<ProductWithPaginationRDO>(ApiRoute.PRODUCT_API);
 
+    data.entities = adaptProductsToClient(data.entities);
+
     dispatch(setProductsAction(data));
   }
 );
@@ -117,10 +121,35 @@ export const fetchProductItemAction = createAsyncThunk<void, ProductId, AsyncOpt
       dispatch(setProductItemAction(null));
 
       const { data } = await api.get<CreateProductRDO>(`${ApiRoute.PRODUCT_API}/${productId}`);
+      const adaptedProduct = adaptProductToClient(data);
 
-      dispatch(setProductItemAction(data));
+      dispatch(setProductItemAction(adaptedProduct));
     } catch(err) {
       dispatch(redirectToRoute(AppRoute.PAGE_404));
     }
+  }
+);
+
+// Update product item
+export const updateProductItemAction = createAsyncThunk<void, Partial<CreateProductRDO>, AsyncOptions>(
+  APIAction.PRODUCTS_UPDATE,
+  async (
+    updateData,
+    {dispatch, extra: api}
+  ) => {
+    const adaptedData = adaptProductToServer(updateData as CreateProductRDO);
+
+    try {
+      const { data } = await api.patch<CreateProductRDO>(`${ApiRoute.PRODUCT_API}/${updateData.id}`, adaptedData);
+
+      dispatch(updateProductsListAction(data)); // Обноавляем итем в списке
+      dispatch(setProductItemAction(data)); // Обноавляем итем в списке
+
+      toast.success(`Product ${updateData.id} was successfully updated`);
+    } catch(err) {
+      toast.warn(`Can't update product. Error: ${err}`)
+    }
+
+
   }
 );

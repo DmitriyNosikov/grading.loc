@@ -3,3 +3,8 @@
   align-items: center;
   justify-content: center;
 }
+
+.spinner-container > img {
+  width: 100px;
+  height: 100px;
+}

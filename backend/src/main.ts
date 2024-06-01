@@ -1,13 +1,14 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
+import { generateSpecYaml } from '@backend/libs/helpers';
+import { RequestLoggerInterceptor } from './app/interceptors/request-logger.interceptor';
 
 import { ConfigEnvironment } from './config/config.constant';
 import { ConfigEnum } from './config/config.schema';
 
-import { generateSpecYaml } from '@backend/libs/helpers';
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {
@@ -39,6 +40,8 @@ async function bootstrap() {
       transform: true, // + трансформация типов данных на основе DTO
     }),
   );
+
+  app.useGlobalInterceptors(new RequestLoggerInterceptor());
 
   // Разрешаем CORS запросы
   app.enableCors();

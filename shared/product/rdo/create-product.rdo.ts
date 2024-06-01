@@ -1,4 +1,4 @@
-import { ProductType, ProductTypeEnum, StringsCount, StringsCountEnum } from '@backend/libs/types';
+import * as types from '@backend/libs/types';
 import { ProductValidation } from '@backend/product/product.constant';
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
@@ -62,20 +62,20 @@ export class CreateProductRDO {
   @ApiProperty({
     description: 'Product type',
     example: 'electro',
-    enum: ProductType,
+    enum: types.ProductType,
   })
   @Expose()
-  type!: ProductTypeEnum;
+  type!: types.ProductTypeEnum;
 
   @ApiProperty({
     description: 'Product strings count',
     example: '4',
-    enum: StringsCount,
+    enum: types.StringsCount,
     minimum: ProductValidation.STRINGS_COUNT.MIN,
     maximum: ProductValidation.STRINGS_COUNT.MAX,
   })
   @Expose()
-  stringsCount!: StringsCountEnum;
+  stringsCount!: types.StringsCountEnum;
 
   @ApiProperty({
     description: 'Product price',

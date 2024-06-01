@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsIn, IsNumber, IsOptional, IsString, Max, MaxLength, Min, MinLength } from 'class-validator';
 
-import { ProductType, ProductTypeEnum, productTypeList, StringsCount } from '@backend/libs/types';
+import * as types from '@backend/libs/types';
 import { ProductValidation } from '@backend/product/product.constant';
 
 export class CreateProductDTO {
@@ -49,20 +49,20 @@ export class CreateProductDTO {
   @ApiProperty({
     description: 'Product type',
     example: 'electro',
-    enum: ProductType,
+    enum: types.ProductType,
   })
-  @IsIn(productTypeList)
+  @IsIn(types.productTypeList)
   @IsString()
-  type!: ProductTypeEnum;
+  type!: types.ProductTypeEnum;
 
   @ApiProperty({
     description: 'Product strings count',
     example: '4',
-    enum: StringsCount,
+    enum: types.StringsCount,
     minimum: ProductValidation.STRINGS_COUNT.MIN,
     maximum: ProductValidation.STRINGS_COUNT.MAX,
   })
-  @IsIn(Object.values(StringsCount))
+  @IsIn(Object.values(types.StringsCount))
   @Min(ProductValidation.STRINGS_COUNT.MIN)
   @Max(ProductValidation.STRINGS_COUNT.MAX)
   @IsNumber()

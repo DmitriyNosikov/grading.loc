@@ -12,6 +12,8 @@ export default function Header(): ReactElement {
   const adminHeaderClass = (isUserAuthorized) ? 'header--admin' : '';
   const headerLink = (isUserAuthorized) ? AppRoute.MAIN : AppRoute.LOGIN;
 
+
+
   return (
     <header className={`header ${adminHeaderClass}`} id="header">
       <div className="container">
@@ -24,9 +26,26 @@ export default function Header(): ReactElement {
               <li className="main-nav__item">
                 <Link className="link main-nav__link" to={AppRoute.MAIN}>Каталог</Link>
               </li>
-              <li className="main-nav__item">
-                <Link className="link main-nav__link" to={AppRoute.MAIN}>Список товаров</Link>
-              </li>
+              {
+                !isUserAuthorized && (
+                  <>
+                    <li className="main-nav__item">
+                      <Link className="link main-nav__link" to={AppRoute.MAIN}>Где купить?</Link>
+                    </li>
+                    <li className="main-nav__item">
+                      <Link className="link main-nav__link" to={AppRoute.MAIN}>О компании</Link>
+                    </li>
+                  </>
+                )
+              }
+
+              {
+                isUserAuthorized && (
+                  <li className="main-nav__item">
+                    <Link className="link main-nav__link" to={AppRoute.MAIN}>Список товаров</Link>
+                  </li>
+                )
+              }
             </ul>
           </nav>
           <div className="header__container"><span className="header__user-name">{ userInfo?.name ?? 'Имя' }</span>

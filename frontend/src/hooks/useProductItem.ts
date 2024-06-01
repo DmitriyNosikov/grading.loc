@@ -1,3 +1,4 @@
+import { CreateProductRDO } from '@shared/product';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '.';
 import { fetchProductItemAction } from '../store/actions/api-action';
@@ -8,7 +9,7 @@ type UseProductItemProps = {
   productId: string;
 }
 
-export default function useProductItem({ productId }: UseProductItemProps) {
+export default function useProductItem({ productId }: UseProductItemProps): CreateProductRDO | null {
   const dispatch = useAppDispatch();
   const currentProduct = useAppSelector(getProduct);
 

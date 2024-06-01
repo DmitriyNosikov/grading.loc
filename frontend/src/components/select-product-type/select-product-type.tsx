@@ -1,9 +1,9 @@
-import { ChangeEventHandler, ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 type SelectProductTypeProps = {
   selectedValue?: string,
   additionalClassName: string;
-  onChangeHandler: ChangeEventHandler<HTMLInputElement>
+  onChangeHandler?: React.ChangeEventHandler<HTMLInputElement>
 };
 
 export default function SelectProductType({ selectedValue, additionalClassName, onChangeHandler }: SelectProductTypeProps): ReactElement {
@@ -24,16 +24,18 @@ export default function SelectProductType({ selectedValue, additionalClassName, 
       text: 'Укулеле'
     },
   ];
+
   return (
-    <div className={`input-radio ${additionalClassName}`}><span>Тип товара</span>
+    <div className={`input-radio ${additionalClassName}`}>
+      <span>Тип товара</span>
       {
         typesList.map((type) => {
           const isChecked = (selectedValue && type.id === selectedValue) ? true : false;
 
           return (
             <>
-              <input type="radio" id={type.id} name="item-type" value={type.id} checked={isChecked} onChange={onChangeHandler} />
-              <label htmlFor={type.id}>{type.text}</label>
+              <input type="radio" id={type.id} name="item-type" value={type.id} checked={isChecked} onChange={onChangeHandler} key={type.id}/>
+              <label htmlFor={type.id} key={type.text}>{type.text}</label>
             </>
           );
         })

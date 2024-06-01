@@ -45,10 +45,6 @@ export const productsDataProcess = createSlice({
       state.product = action.payload;
     },
 
-    updateProductItemAction: (state, action: PayloadAction<CreateProductRDO>) => {
-      state.product = action.payload;
-    },
-
     deleteProductItemAction: (state, action: PayloadAction<CreateProductRDO>) => {
       const deleteProduct =  action.payload;
       state.paginated_products.entities
