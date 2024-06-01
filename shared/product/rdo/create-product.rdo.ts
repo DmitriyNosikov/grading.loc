@@ -1,6 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { ProductType, ProductTypeEnum, StringsCount, StringsCountEnum } from '@backend/libs/types';
 import { ProductValidation } from '@backend/product/product.constant';
+import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
 export class CreateProductRDO {
@@ -32,7 +32,7 @@ export class CreateProductRDO {
     maximum: ProductValidation.VENDOR_CODE.MAX_LENGTH,
   })
   @Expose()
-  vendorCode: string;
+  vendorCode!: string;
 
   @ApiProperty({
     description: 'Product title',
@@ -41,7 +41,7 @@ export class CreateProductRDO {
     maximum: ProductValidation.TITLE.MAX_LENGTH,
   })
   @Expose()
-  title: string;
+  title!: string;
 
   @ApiProperty({
     description: 'Product description',
@@ -50,14 +50,14 @@ export class CreateProductRDO {
     maximum: ProductValidation.DESCRIPTION.MAX_LENGTH,
   })
   @Expose()
-  description: string;
+  description!: string;
 
   @ApiProperty({
     description: 'Product photo URL (.jpg/.png)',
     example: 'http://some.interesting/photo.jpg',
   })
   @Expose()
-  photo: string;
+  photo!: string;
 
   @ApiProperty({
     description: 'Product type',
@@ -65,7 +65,7 @@ export class CreateProductRDO {
     enum: ProductType,
   })
   @Expose()
-  type: ProductTypeEnum;
+  type!: ProductTypeEnum;
 
   @ApiProperty({
     description: 'Product strings count',
@@ -75,7 +75,7 @@ export class CreateProductRDO {
     maximum: ProductValidation.STRINGS_COUNT.MAX,
   })
   @Expose()
-  stringsCount: StringsCountEnum;
+  stringsCount!: StringsCountEnum;
 
   @ApiProperty({
     description: 'Product price',
@@ -84,5 +84,5 @@ export class CreateProductRDO {
     maximum: ProductValidation.PRICE.MAX,
   })
   @Expose()
-  price: number;
+  price!: number;
 }

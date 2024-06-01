@@ -1,9 +1,13 @@
+import { useAppSelector } from '@frontend/src/hooks';
+import { getUserAuthStatus, getUserInfo } from '@frontend/src/store/slices/user-process/user-process.selectors';
 import { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 
 export default function Header(): ReactElement {
-  const isUserAuthorized = false;
+  const authStatus = useAppSelector(getUserAuthStatus);
+  const userInfo = useAppSelector(getUserInfo);
+  const isUserAuthorized = (authStatus === AuthorizationStatus.AUTH);
 
   const adminHeaderClass = (isUserAuthorized) ? 'header--admin' : '';
   const headerLink = (isUserAuthorized) ? AppRoute.MAIN : AppRoute.LOGIN;
@@ -25,7 +29,7 @@ export default function Header(): ReactElement {
               </li>
             </ul>
           </nav>
-          <div className="header__container"><span className="header__user-name">Имя</span>
+          <div className="header__container"><span className="header__user-name">{ userInfo?.name ?? 'Имя' }</span>
             <Link className="header__link" to={headerLink} aria-label="Перейти в личный кабинет">
               <svg className="header__link-icon" width="12" height="14" aria-hidden="true">
                 <use xlinkHref="#icon-account"></use>

@@ -1,21 +1,43 @@
 import { ChangeEventHandler, ReactElement } from 'react';
 
 type SelectProductTypeProps = {
+  selectedValue?: string,
   additionalClassName: string;
   onChangeHandler: ChangeEventHandler<HTMLInputElement>
 };
 
-export default function SelectProductType({ additionalClassName, onChangeHandler }: SelectProductTypeProps): ReactElement {
-  // edit-item__form-radio
-  // edit-item__form-radio
+export default function SelectProductType({ selectedValue, additionalClassName, onChangeHandler }: SelectProductTypeProps): ReactElement {
+  const typesList = [
+    {
+      id: 'guitar',
+      checked: false,
+      text: 'Акустическая гитара'
+    },
+    {
+      id: 'el-guitar',
+      checked: false,
+      text: 'Электрогитара'
+    },
+    {
+      id: 'ukulele',
+      checked: false,
+      text: 'Укулеле'
+    },
+  ];
   return (
     <div className={`input-radio ${additionalClassName}`}><span>Тип товара</span>
-      <input type="radio" id="guitar" name="item-type" value="guitar" onChange={onChangeHandler} />
-      <label htmlFor="guitar">Акустическая гитара</label>
-      <input type="radio" id="el-guitar" name="item-type" value="el-guitar" onChange={onChangeHandler} />
-      <label htmlFor="el-guitar">Электрогитара</label>
-      <input type="radio" id="ukulele" name="item-type" value="ukulele" onChange={onChangeHandler} />
-      <label htmlFor="ukulele">Укулеле</label>
+      {
+        typesList.map((type) => {
+          const isChecked = (selectedValue && type.id === selectedValue) ? true : false;
+
+          return (
+            <>
+              <input type="radio" id={type.id} name="item-type" value={type.id} checked={isChecked} onChange={onChangeHandler} />
+              <label htmlFor={type.id}>{type.text}</label>
+            </>
+          );
+        })
+      }
     </div>
   );
 }

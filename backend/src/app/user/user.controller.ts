@@ -75,6 +75,7 @@ export class UserController {
   }
 
   @Get('/:userId')
+  @UseGuards(JWTAuthGuard)
   @ApiOperation({ summary: 'Get detail info about user' })
   @ApiResponse({
     type: UserRDO,
@@ -92,6 +93,7 @@ export class UserController {
   }
 
   @Delete(':userId')
+  @UseGuards(JWTAuthGuard)
   @ApiOperation({ summary: 'Delete user' })
   @ApiResponse({
     status: HttpStatus.OK,

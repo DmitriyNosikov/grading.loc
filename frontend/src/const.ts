@@ -17,8 +17,12 @@ export const AppRoute = {
 const backendUsersAPI = `${BASE_URL}/api/users`;
 const backendProductsAPI = `${BASE_URL}/api/products`;
 export const ApiRoute = {
+  USER_API: backendUsersAPI,
+  PRODUCT_API: backendProductsAPI,
+
   REGISTER: `${backendUsersAPI}/register`,
-  LOGIN: `${backendUsersAPI}/login`
+  LOGIN: `${backendUsersAPI}/login`,
+  CHECK_JWT_TOKEN: `${backendUsersAPI}/check`
 } as const;
 
 

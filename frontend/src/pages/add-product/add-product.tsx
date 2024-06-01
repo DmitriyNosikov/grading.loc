@@ -4,15 +4,24 @@ import Breadcrumbs from '../../components/breadcrumbs/breadcrumds';
 import SelectProductType from '../../components/select-product-type/select-product-type';
 import SelectStringsCount from '../../components/select-strings-count/select-strings-count';
 import { AppRoute } from '../../const';
-import { getPaddedNum } from '../../utils/common';
+import { getFormattedDate } from '../../utils/common';
 
 export default function AddProduct(): ReactElement {
   const navigate = useNavigate();
 
-  const date = new Date();
-  const day = getPaddedNum(date.getDate());
-  const month = getPaddedNum(date.getMonth());
-  const currentDate = `${day}.${month}.${date.getFullYear()}`;
+  const currentDate = getFormattedDate(new Date());
+
+  function handleAddImageClick() {
+    console.log('Image adding is not implemented yet');
+  }
+
+  function handleRemoveImageClick() {
+    console.log('Image deleting is not implemented yet');
+  }
+
+  function handleSaveBtnClick() {
+    console.log('Saving is not implemented yet');
+  }
 
   function handleReturnBtnClick() {
     navigate(AppRoute.MAIN);
@@ -32,9 +41,9 @@ export default function AddProduct(): ReactElement {
               </div>
 
               <div className="edit-item-image__btn-wrap">
-                <button className="button button--small button--black-border edit-item-image__btn">Добавить
+                <button className="button button--small button--black-border edit-item-image__btn" onClick={handleAddImageClick}>Добавить
                 </button>
-                <button className="button button--small button--black-border edit-item-image__btn">Удалить</button>
+                <button className="button button--small button--black-border edit-item-image__btn" onClick={handleRemoveImageClick}>Удалить</button>
               </div>
             </div>
 
@@ -77,7 +86,7 @@ export default function AddProduct(): ReactElement {
           </div>
 
           <div className="add-item__form-buttons-wrap">
-            <button className="button button--small add-item__form-button" type="submit">Сохранить изменения</button>
+            <button className="button button--small add-item__form-button" type="submit" onClick={handleSaveBtnClick}>Сохранить изменения</button>
             <button className="button button--small add-item__form-button" type="button" onClick={handleReturnBtnClick}>Вернуться к списку товаров</button>
           </div>
         </form>

@@ -8,6 +8,9 @@ import { store } from './store';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import browserHistory from './browser-history';
+import HistoryRouter from './components/history-route/history-route';
+import ScrollToTop from './components/scroll-to-top/scroll-to-top';
 import { checkAuthAction } from './store/actions/api-action';
 
 // Проверяем авторизацию пользователя
@@ -22,7 +25,11 @@ root.render(
     <ToastContainer />
 
     <Provider store={store}>
-      <App />
+      <HistoryRouter history={ browserHistory }>
+        <ScrollToTop />
+
+        <App />
+      </HistoryRouter>
     </Provider>
   </React.StrictMode>
 );

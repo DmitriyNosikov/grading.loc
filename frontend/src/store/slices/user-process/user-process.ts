@@ -19,7 +19,6 @@ export const userProcess = createSlice({
   initialState,
   reducers: {
     setUserInfoAction: (state, action: PayloadAction<LoggedUserRDO | null>) => {
-      console.log('ACTION PAYLOAD: ', action);
       state.userInfo = action.payload;
     }
   },

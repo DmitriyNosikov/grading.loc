@@ -14,7 +14,7 @@ export class CreateProductDTO {
   @MaxLength(ProductValidation.VENDOR_CODE.MAX_LENGTH)
   @MinLength(ProductValidation.VENDOR_CODE.MIN_LENGTH)
   @IsString()
-  vendorCode: string;
+  vendorCode!: string;
 
   @ApiProperty({
     description: 'Product title',
@@ -25,7 +25,7 @@ export class CreateProductDTO {
   @MaxLength(ProductValidation.TITLE.MAX_LENGTH)
   @MinLength(ProductValidation.TITLE.MIN_LENGTH)
   @IsString()
-  title: string;
+  title!: string;
 
   @ApiProperty({
     description: 'Product description',
@@ -36,7 +36,7 @@ export class CreateProductDTO {
   @MaxLength(ProductValidation.DESCRIPTION.MAX_LENGTH)
   @MinLength(ProductValidation.DESCRIPTION.MIN_LENGTH)
   @IsString()
-  description: string;
+  description!: string;
 
   @ApiProperty({
     description: 'Product photo URL (.jpg/.png)',
@@ -44,7 +44,7 @@ export class CreateProductDTO {
   })
   @IsString()
   @IsOptional()
-  photo: string;
+  photo!: string;
 
   @ApiProperty({
     description: 'Product type',
@@ -53,7 +53,7 @@ export class CreateProductDTO {
   })
   @IsIn(productTypeList)
   @IsString()
-  type: ProductTypeEnum;
+  type!: ProductTypeEnum;
 
   @ApiProperty({
     description: 'Product strings count',
@@ -66,7 +66,7 @@ export class CreateProductDTO {
   @Min(ProductValidation.STRINGS_COUNT.MIN)
   @Max(ProductValidation.STRINGS_COUNT.MAX)
   @IsNumber()
-  stringsCount: number;
+  stringsCount!: number;
 
   @ApiProperty({
     description: 'Product price',
@@ -77,5 +77,5 @@ export class CreateProductDTO {
   @Min(ProductValidation.PRICE.MIN)
   @Max(ProductValidation.PRICE.MAX)
   @IsNumber()
-  price: number;
+  price!: number;
 }

@@ -2,7 +2,7 @@ import { Namespace } from '@frontend/src/const';
 import { UserStateNamespace } from '@frontend/src/types/selector';
 import { LoggedUserRDO } from '@shared/user';
 
-export function getAuthStatus(state: UserStateNamespace): string {
+export function getUserAuthStatus(state: UserStateNamespace): string {
   return state[Namespace.USER].authorizationStatus;
 }
 
