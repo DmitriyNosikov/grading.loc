@@ -1,9 +1,9 @@
 import { fillDTO } from '@backend/libs/helpers';
-import {ProductType, StringsCount } from '@backend/libs/types';
+import { ProductType, StringsCount } from '@backend/libs/types';
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiHeader, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import {  SearchQuery } from '@shared/product/types/search/search-query.type';
-import {  SortDirection, SortType, } from '@shared/product/types/search/sort-type.enum';
+import { SearchQuery } from '@shared/product/types/search/search-query.type';
+import { SortDirection, SortType, } from '@shared/product/types/search/sort-type.enum';
 
 import { CreateProductDTO } from '@shared/product/dto/create-product.dto';
 import { UpdateProductDTO } from '@shared/product/dto/update-product.dto';

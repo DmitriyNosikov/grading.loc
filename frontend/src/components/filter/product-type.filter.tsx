@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, ReactElement } from 'react';
+import { ChangeEventHandler, ReactElement } from 'react';
 
 type ProductTypeFilterProps = {
   types: string[],
@@ -20,7 +20,7 @@ export default function ProductTypeFilter({ types, onChange }: ProductTypeFilter
         types.map((item) => {
           return (
             <div className="form-checkbox catalog-filter__block-item">
-              <input className="visually-hidden" type="checkbox" id={item} name={item} onChange={onChange}/>
+              <input className="visually-hidden" type="checkbox" id={item} name={item} onChange={onChange} />
               <label htmlFor={item}>{ typesText[item] }</label>
             </div>
           );

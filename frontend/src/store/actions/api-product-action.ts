@@ -4,13 +4,14 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { CreateProductRDO, ProductWithPaginationRDO } from '@shared/product';
 
 // Actions from slices
-import { toast } from 'react-toastify';
-import { adaptProductToClient, adaptProductToServer, adaptProductsToClient } from '@frontend/src/utils/adapters';
-import { redirectToRoute } from '../middlewares/redirect-action';
-import { deleteProductItemStateAction, setProductItemAction, setProductsAction, updateProductsListAction } from '../slices/product-process/product-process';
-import { setDataLoadingStatus } from '../slices/main-process/main-process';
+import { ProductTypeEnum } from '@backend/libs/types';
 import { AsyncOptions } from '@frontend/src/types/async-options.type';
+import { adaptProductToClient, adaptProductToServer, adaptProductsToClient, adaptQueryParams, adaptTypeToServer } from '@frontend/src/utils/adapters';
 import { SearchQuery } from '@shared/product/types/search/search-query.type';
+import { toast } from 'react-toastify';
+import { redirectToRoute } from '../middlewares/redirect-action';
+import { setDataLoadingStatus } from '../slices/main-process/main-process';
+import { deleteProductItemStateAction, setProductItemAction, setProductsAction, updateProductsListAction } from '../slices/product-process/product-process';
 
 // Async actions names
 const APIProductPrefix = `[${Namespace.PRODUCT}-BACKEND]`;
@@ -141,14 +142,40 @@ export const getPaginationPage = createAsyncThunk<void, PageNumber, AsyncOptions
 export const searchProduct = createAsyncThunk<void, SearchQuery, AsyncOptions>(
   APIAction.PAGINATION_GET_PAGE,
   async (
-    SearchQuery,
+    searchQuery,
     {dispatch, extra: api}
   ) => {
     dispatch(setDataLoadingStatus(true));
 
-    const prepearedUrl = new URLSearchParams(SearchQuery as  Record<string, string>).toString();
 
-    console.log('SEARCH PARAMS: ', prepearedUrl);
+    let url = `${ApiRoute.PRODUCT_API}`;
+
+    if(searchQuery && Object.keys(searchQuery).length > 0) {
+      if(searchQuery.type && searchQuery.type.length > 0) {
+        searchQuery.type = searchQuery.type.map((type) => adaptTypeToServer(type)) as ProductTypeEnum[];
+      }
+
+      const queryString = adaptQueryParams(searchQuery);
+
+      url += `/?${queryString}`;
+    }
+
+    // Запрашиваем данные с сервера
+    try {
+      const { data } = await api.get<ProductWithPaginationRDO>(url);
+
+      if(data) {
+        data.entities = adaptProductsToClient(data.entities);
+      }
+
+      if(!data) {
+        toast.warn('No products found by passed filter');
+      }
+
+      dispatch(setProductsAction(data));
+    } catch(err) {
+      toast.error(`Can't fetch products. Error: ${err}`);
+    }
 
     dispatch(setDataLoadingStatus(false));
   }

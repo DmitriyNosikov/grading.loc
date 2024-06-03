@@ -1,11 +1,11 @@
 import { BasePostgresRepository } from '@backend/libs/data-access';
 import { ProductInterface } from '@backend/libs/interfaces';
 import { PaginationResult, ProductTypeEnum } from '@backend/libs/types';
-import { SearchQuery } from '@shared/product/types/search/search-query.type';
-import { SortDirectionEnum, SortType, SortTypeEnum } from '@shared/product/types/search/sort-type.enum';
-import { SearchFilters } from '@shared/product/types/search/search-filters';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { SearchFilters } from '@shared/product/types/search/search-filters';
+import { SearchQuery } from '@shared/product/types/search/search-query.type';
+import { SortDirectionEnum, SortType, SortTypeEnum } from '@shared/product/types/search/sort-type.enum';
 import { PrismaClientService } from '../prisma-client/prisma-client.service';
 import { DEFAULT_SORT_DIRECTION, DEFAULT_SORT_TYPE, MAX_ITEMS_PER_PAGE } from './product.constant';
 import { ProductEntity } from './product.entity';
@@ -121,7 +121,6 @@ export class ProductRepository extends BasePostgresRepository<ProductEntity, Pro
     }
 
     // Поиск по количеству струн
-    console.log('TESTS: ', query);
     if(query?.stringsCount) {
       if(!Array.isArray(query.stringsCount)) {
         query.stringsCount = [query.stringsCount];

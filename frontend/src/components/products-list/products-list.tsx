@@ -4,6 +4,7 @@ import { ReactElement } from 'react';
 import ProductsListItem from '../products-list-item/products-list-item';
 import Spinner from '../spinner/spinner';
 
+
 export default function ProductsList(): ReactElement {
   const paginatedProductsList = useAppSelector(getProducts);
 
