@@ -6,7 +6,7 @@ GET https://jsonplaceholder.typicode.com/todos/1 HTTP/1.1
 Content-Type: application/json
 ###
 
-@authorization = Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjVhMmYxZDRhNzI4Y2UxZDMxYzRlZjciLCJlbWFpbCI6Imlyb24tbWFuQHN0YXJraW5kdXN0cmllcy5pdCIsIm5hbWUiOiJUb255IiwiaWF0IjoxNzE3MTg3MTYyLCJleHAiOjE3MTcxODc3NjJ9.XiZjEsoCv6W1qOhO2pCPva5uiLjNd2XesjftBDSIKVA
+@authorization = Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU1YjNiN2FmYmYwNWQzYjUxM2RmNzEiLCJlbWFpbCI6Imlyb24tbWFuQHN0YXJraW5kdXN0cmllcy5pdCIsIm5hbWUiOiJUb255IiwiaWF0IjoxNzE3NDI3MjA2LCJleHAiOjE3MTc0Mjc4MDZ9.-B0DCoyaNmeAbwwJvPauZacVYkLAswnTU434NDCVPuo
 @postId = 02cb5d1c-4127-4c71-b467-5ea384864e95
 
 # Creationg product
@@ -50,18 +50,33 @@ GET {{baseUrl}}/ HTTP/1.1
 {{authorization}}
 ###
 
+# Get products list + pagination
+GET {{baseUrl}}/?limit=2&page=2 HTTP/1.1
+{{authorization}}
+###
+
 # by title
 GET {{baseUrl}}/?title=Sambora HTTP/1.1
 {{authorization}}
 ###
 
+# by types
+GET {{baseUrl}}/?type[]=electro&type[]=ukulele HTTP/1.1
+{{authorization}}
+###
+
 # by type + pagination
-GET {{baseUrl}}/?type=electro&limit=2&page=1 HTTP/1.1
+GET {{baseUrl}}/?type=acoustic HTTP/1.1
+{{authorization}}
+###
+
+# by strings counts
+GET {{baseUrl}}/?stringsCount[]=4&stringsCount[]=6 HTTP/1.1
 {{authorization}}
 ###
 
 # by strings count
-GET {{baseUrl}}/?stringsCount=4 HTTP/1.1
+GET {{baseUrl}}/?stringsCount=6 HTTP/1.1
 {{authorization}}
 ###
 

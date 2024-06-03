@@ -7,10 +7,6 @@ export default function Pagination() {
   const dispatch = useAppDispatch();
   const paginatedProducts = useAppSelector(getProducts);
 
-  if(!paginatedProducts) {
-    return;
-  }
-
   // Получаем из количества страниц псевдо-массив
   const pages = Array.from({ length: paginatedProducts.totalPages }, (_, i) => i+1);
 

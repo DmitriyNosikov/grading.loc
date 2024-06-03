@@ -1,4 +1,4 @@
-import { SortDirection, SortType } from '../libs/types/search/sort-type.enum'
+import { SortDirection, SortType, } from '@shared/product/types/search/sort-type.enum';
 import { MessagesType } from '../libs/types/';
 
 export const MAX_ITEMS_PER_PAGE = 7; // Максимальное количество результатов при запросе списка

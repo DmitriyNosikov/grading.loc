@@ -1,7 +1,9 @@
 import { fillDTO } from '@backend/libs/helpers';
-import { SearchQuery, SortDirection, SortType, StringsCount } from '@backend/libs/types';
+import {ProductType, StringsCount } from '@backend/libs/types';
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiHeader, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {  SearchQuery } from '@shared/product/types/search/search-query.type';
+import {  SortDirection, SortType, } from '@shared/product/types/search/sort-type.enum';
 
 import { CreateProductDTO } from '@shared/product/dto/create-product.dto';
 import { UpdateProductDTO } from '@shared/product/dto/update-product.dto';
@@ -62,6 +64,13 @@ export class ProductController {
     required: false
   })
   @ApiQuery({
+    name: "type",
+    description: `Product type  (or types array)`,
+    enum: Object.values(ProductType),
+    example: "electro",
+    required: false
+  })
+  @ApiQuery({
     name: "stringsCount",
     description: `Product strings count`,
     enum: Object.values(StringsCount),
@@ -98,7 +107,7 @@ export class ProductController {
     name: "sortDirection",
     description: `Sorting direction. Default direction: ${DEFAULT_SORT_DIRECTION}`,
     enum: SortDirection,
-    example: " Pdesc",
+    example: " desc",
     required: false
   })
   @ApiResponse({

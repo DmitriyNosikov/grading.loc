@@ -1,5 +1,5 @@
 import { fillDTO, omitUndefined } from '@backend/libs/helpers';
-import { SearchQuery } from '@backend/libs/types';
+import {  SearchQuery } from '@shared/product/types/search/search-query.type';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 
 import { CreateProductDTO } from '@shared/product/dto/create-product.dto';

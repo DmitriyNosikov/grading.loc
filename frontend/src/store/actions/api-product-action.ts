@@ -10,6 +10,7 @@ import { redirectToRoute } from '../middlewares/redirect-action';
 import { deleteProductItemStateAction, setProductItemAction, setProductsAction, updateProductsListAction } from '../slices/product-process/product-process';
 import { setDataLoadingStatus } from '../slices/main-process/main-process';
 import { AsyncOptions } from '@frontend/src/types/async-options.type';
+import { SearchQuery } from '@shared/product/types/search/search-query.type';
 
 // Async actions names
 const APIProductPrefix = `[${Namespace.PRODUCT}-BACKEND]`;
@@ -121,6 +122,26 @@ export const getPaginationPage = createAsyncThunk<void, PageNumber, AsyncOptions
   APIAction.PAGINATION_GET_PAGE,
   async (
     pageNumber,
+    {dispatch, extra: api}
+  ) => {
+    dispatch(setDataLoadingStatus(true));
+
+    try {
+      const { data } = await api.get<ProductWithPaginationRDO>(`${ApiRoute.PRODUCT_API}/?page=${pageNumber}`);
+
+      dispatch(setProductsAction(data));
+    } catch(err) {
+      toast.error(`Cant't get pagination page ${pageNumber}. Error: ${err}`);
+    }
+
+    dispatch(setDataLoadingStatus(false));
+  }
+);
+
+export const searchProduct = createAsyncThunk<void, SearchQuery, AsyncOptions>(
+  APIAction.PAGINATION_GET_PAGE,
+  async (
+    SearchQuery,
     {dispatch, extra: api}
   ) => {
     dispatch(setDataLoadingStatus(true));
