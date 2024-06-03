@@ -13,7 +13,7 @@ import PrivateRoute from '../private-route/private-route';
 import ProductDetail from '../product-detail/product-detail';
 import ProductsList from '../products-list/products-list';
 
-// TODO: Нужен Helmet для смены заголвоков
+// TODO: Нужен Helmet для смены заголовков
 
 export default function App(): ReactElement {
   return (

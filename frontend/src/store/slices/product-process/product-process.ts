@@ -1,7 +1,7 @@
 import { Namespace } from '@frontend/src/const';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { CreateProductRDO, ProductWithPaginationRDO } from '@shared/product';
-import { fetchProductsAction } from '../../actions/api-action';
+import { fetchProductsAction } from '../../actions/api-product-action';
 
 type ProductDataProcess = {
   product: CreateProductRDO | null,
@@ -45,10 +45,10 @@ export const productsDataProcess = createSlice({
       state.product = action.payload;
     },
 
-    deleteProductItemAction: (state, action: PayloadAction<CreateProductRDO>) => {
-      const deleteProduct =  action.payload;
-      state.paginated_products.entities
-        .filter((product) => product.id !== deleteProduct.id);
+    deleteProductItemStateAction: (state, action: PayloadAction<string>) => {
+      const deleteProductId =  action.payload;
+      state.paginated_products.entities = state.paginated_products.entities
+        .filter((product) => product.id !== deleteProductId);
     },
   },
   extraReducers(builder) {
@@ -70,5 +70,5 @@ export const {
   setProductsLoadingStatus,
   updateProductsListAction,
   setProductItemAction,
-  deleteProductItemAction
+  deleteProductItemStateAction
 } = productsDataProcess.actions;

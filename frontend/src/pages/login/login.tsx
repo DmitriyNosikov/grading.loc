@@ -1,7 +1,7 @@
 
 
 import { useAppDispatch } from '@frontend/src/hooks';
-import { loginAction } from '@frontend/src/store/actions/api-action';
+import { loginAction } from '@frontend/src/store/actions/api-user-action';
 import { ReactElement, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';

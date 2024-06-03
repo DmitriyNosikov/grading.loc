@@ -2,7 +2,7 @@ import { AuthorizationStatus, Namespace } from '@frontend/src/const';
 import { getToken } from '@frontend/src/services/token';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { LoggedUserRDO } from '@shared/user/';
-import { checkAuthAction, loginAction } from '../../actions/api-action';
+import { checkAuthAction, loginAction } from '../../actions/api-user-action';
 
 export type UserProcess = {
   authorizationStatus: keyof typeof AuthorizationStatus,

@@ -6,7 +6,7 @@ import Spinner from '@frontend/src/components/spinner/spinner';
 import { AppRoute } from '@frontend/src/const';
 import useProductDetail from '@frontend/src/hooks/useProductDetail';
 import { store } from '@frontend/src/store';
-import { updateProductItemAction } from '@frontend/src/store/actions/api-action';
+import { updateProductItemAction } from '@frontend/src/store/actions/api-product-action';
 import { getFormattedDate } from '@frontend/src/utils/common';
 import { CreateProductRDO } from '@shared/product';
 import { ReactElement, useState } from 'react';

@@ -1,4 +1,6 @@
 import { AppRoute } from '@frontend/src/const';
+import { useAppDispatch } from '@frontend/src/hooks';
+import { deleteProductItemAction } from '@frontend/src/store/actions/api-product-action';
 import { getFormattedDate } from '@frontend/src/utils/common';
 import { CreateProductRDO } from '@shared/product';
 import { ReactElement } from 'react';
@@ -9,10 +11,15 @@ type ProductListItemProps = {
 };
 
 export default function ProductsListItem({ product }: ProductListItemProps): ReactElement {
+  const dispatch = useAppDispatch();
   const productDate = product.createdAt ? getFormattedDate(new Date(product.createdAt)) : '';
 
   function handleDeleteProductClick() {
-    console.log('Product to delete: ', product.id);
+    if(!product.id || !confirm('Are you sure that you want to delete this product?')) {
+      return;
+    }
+
+    dispatch(deleteProductItemAction(product.id));
   }
 
   return (

@@ -11,7 +11,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import browserHistory from './browser-history';
 import HistoryRouter from './components/history-route/history-route';
 import ScrollToTop from './components/scroll-to-top/scroll-to-top';
-import { checkAuthAction } from './store/actions/api-action';
+import { checkAuthAction } from './store/actions/api-user-action';
+
 
 // Проверяем авторизацию пользователя
 store.dispatch(checkAuthAction());
@@ -19,6 +20,7 @@ store.dispatch(checkAuthAction());
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 
 root.render(
   <React.StrictMode>

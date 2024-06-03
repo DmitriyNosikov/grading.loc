@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
 import { store } from '@frontend/src/store';
-import { fetchProductsAction } from '@frontend/src/store/actions/api-action';
+import { fetchProductsAction } from '@frontend/src/store/actions/api-product-action';
 import AddProductButton from '../../components/add-product-button/add-product-button';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumds';
 import Filter from '../../components/filter/filter';
@@ -23,9 +23,11 @@ export default function Products(): ReactElement {
           <Filter />
           <Sort />
           <ProductsList />
-          <AddProductButton />
-          <Pagination />
         </div>
+
+        <AddProductButton />
+
+        <Pagination />
       </div>
     </section>
   );

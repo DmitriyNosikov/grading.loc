@@ -1,7 +1,7 @@
 import { CreateProductRDO } from '@shared/product';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '.';
-import { fetchProductItemAction } from '../store/actions/api-action';
+import { fetchProductItemAction } from '../store/actions/api-product-action';
 import { getProduct } from '../store/slices/product-process/product-process.selectors';
 
 

@@ -11,6 +11,7 @@ const TIMEOUT = 5000;
 
 const ERROR_TEXT = {
   NOT_AUTHORIZED: 'You aren`t authorized',
+  NETWORK_CONNECTION: 'Can`t connect to backend server',
 } as const;
 
 const StatusCodesMap = [
@@ -18,7 +19,7 @@ const StatusCodesMap = [
   StatusCodes.UNAUTHORIZED,
   StatusCodes.NOT_FOUND,
   StatusCodes.BAD_GATEWAY,
-  StatusCodes.CONFLICT,
+  StatusCodes.CONFLICT
 ] as const;
 
 type DetailMessage = {
@@ -54,6 +55,10 @@ export function createAPI(): AxiosInstance {
   api.interceptors.response.use(
     (response) => response,
     (error: AxiosError<ErrorMessage>) => {
+      if(error.isAxiosError && error.code === 'ERR_NETWORK') {
+        toast.error(ERROR_TEXT.NETWORK_CONNECTION);
+      }
+
       if(error.response && StatusCodesMap.includes(error.response.status)) {
         const { data } = error.response;
         const { message, details } = data;
