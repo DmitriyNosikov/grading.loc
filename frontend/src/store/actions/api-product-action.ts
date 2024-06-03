@@ -146,13 +146,9 @@ export const searchProduct = createAsyncThunk<void, SearchQuery, AsyncOptions>(
   ) => {
     dispatch(setDataLoadingStatus(true));
 
-    try {
-      const { data } = await api.get<ProductWithPaginationRDO>(`${ApiRoute.PRODUCT_API}/?page=${pageNumber}`);
+    const prepearedUrl = new URLSearchParams(SearchQuery as  Record<string, string>).toString();
 
-      dispatch(setProductsAction(data));
-    } catch(err) {
-      toast.error(`Cant't get pagination page ${pageNumber}. Error: ${err}`);
-    }
+    console.log('SEARCH PARAMS: ', prepearedUrl);
 
     dispatch(setDataLoadingStatus(false));
   }

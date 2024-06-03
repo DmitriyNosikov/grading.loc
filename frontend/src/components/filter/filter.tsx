@@ -1,6 +1,39 @@
 import { ReactElement, useState } from 'react';
+import ProductTypeFilter from './product-type.filter';
+import StringsCountFilter from './strings-count.filter copy';
 
 export default function Filter(): ReactElement {
+  const [selectedTypes, setSelectedTypes] = useState([]);
+  const [stringsCountsList, setStringsCountsList] = useState([4, 6, 7, 12]);
+  const [selectedStringsCounts, setSelectedStringsCounts] = useState([]);
+
+  const stringsCountByTypes = {
+    'default': [4, 6, 7, 12],
+    'guitar': [6, 7, 12],
+    'el-guitar': [4, 6, 7],
+    'ukulele': [4],
+  }
+
+  const productTypes = Object.keys(stringsCountByTypes).slice(1);
+  let availibleStringsCounts: number[] = [];
+
+  if(selectedTypes.length > 0) {
+    selectedTypes.forEach((type) => {
+      if(stringsCountByTypes[type]) {
+        const typeStringsCount: number[] = stringsCountByTypes[type];
+
+        availibleStringsCounts.push(...typeStringsCount);
+      }
+    });
+
+    if(availibleStringsCounts.length > 0) {
+      availibleStringsCounts = Array.from(new Set(availibleStringsCounts));
+    }
+  } else {
+    availibleStringsCounts = stringsCountByTypes['default'];
+  }
+
+
   function handleTypeChange(e: React.ChangeEvent<HTMLInputElement>) {
     const target = e.target;
 
@@ -9,50 +42,32 @@ export default function Filter(): ReactElement {
 
   function handleStringsCountChange(e: React.ChangeEvent<HTMLInputElement>) {
     const target = e.target;
-    const stringsCount = target.id.split('-')[0];
+    const stringsCount = Number(target.id.split('-')[0]);
+    let selectedStrings: number[] = selectedStringsCounts;
 
-    console.log('Strings count changed: ', stringsCount, target.checked);
+    if(target.checked && !selectedStrings.includes(stringsCount)) {
+      selectedStrings.push(stringsCount);
+    }
+
+    if(!target.checked && selectedStrings.includes(stringsCount)) {
+      selectedStrings = selectedStrings.filter((item) => item !== stringsCount);
+    }
+
+    setSelectedStringsCounts(selectedStrings as never[]);
+    console.log('Strings count changed: ', selectedStrings);
   }
 
   return (
     <form className="catalog-filter" action="#" method="post">
       <h2 className="title title--bigger catalog-filter__title">Фильтр</h2>
 
-      <fieldset className="catalog-filter__block">
-        <legend className="catalog-filter__block-title">Тип гитар</legend>
-        <div className="form-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="acoustic" name="acoustic" onChange={handleTypeChange}/>
-          <label htmlFor="acoustic">Акустические гитары</label>
-        </div>
-        <div className="form-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="electric" name="electric" onChange={handleTypeChange}/>
-          <label htmlFor="electric">Электрогитары</label>
-        </div>
-        <div className="form-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="ukulele" name="ukulele" onChange={handleTypeChange}/>
-          <label htmlFor="ukulele">Укулеле</label>
-        </div>
-      </fieldset>
+      <ProductTypeFilter types={productTypes} onChange={handleTypeChange} />
 
-      <fieldset className="catalog-filter__block">
-        <legend className="catalog-filter__block-title">Количество струн</legend>
-        <div className="form-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="4-strings" name="4-strings" onChange={handleStringsCountChange}/>
-          <label htmlFor="4-strings">4</label>
-        </div>
-        <div className="form-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="6-strings" name="6-strings" onChange={handleStringsCountChange}/>
-          <label htmlFor="6-strings">6</label>
-        </div>
-        <div className="form-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="7-strings" name="7-strings" onChange={handleStringsCountChange}/>
-          <label htmlFor="7-strings">7</label>
-        </div>
-        <div className="form-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="12-strings" name="12-strings" onChange={handleStringsCountChange}/>
-          <label htmlFor="12-strings">12</label>
-        </div>
-      </fieldset>
+      {
+        (availibleStringsCounts.length > 0) &&
+          <StringsCountFilter availibleStringsCounts={stringsCountsList} onChange={handleStringsCountChange} />
+      }
+
       <button className="catalog-filter__reset-btn button button--black-border button--medium" type="reset">Очистить</button>
     </form>
   );
