@@ -1,3 +1,4 @@
+import { AppRoute } from '@frontend/src/const';
 import { useAppDispatch, useAppSelector } from '@frontend/src/hooks';
 import { registerAction } from '@frontend/src/store/actions/api-user-action';
 import { getDataLoadingStatus } from '@frontend/src/store/slices/main-process/main-process.selectors';
@@ -41,7 +42,7 @@ export default function Registration() {
       toast.success(`User ${userEmailValue} has been successfully registered`);
       toast.info('Now you can login in system');
 
-      // navigate(AppRoute.LOGIN);
+      navigate(AppRoute.LOGIN);
     });
   }
 
