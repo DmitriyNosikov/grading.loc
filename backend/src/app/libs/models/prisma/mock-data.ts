@@ -17,7 +17,7 @@ export function getProducts() {
       description: "Unique epic solo-master`s guitar",
       photo: FIRST_PHOTO,
       stringsCount: 6,
-      price: 100000,
+      price: 383490,
     },
     {
       type: ProductType.ACOUSTIC,
@@ -26,7 +26,7 @@ export function getProducts() {
       description: "LP solo-singer`s guitar",
       photo: SECOND_PHOTO,
       stringsCount: 7,
-      price: 100000,
+      price: 938541,
     },
     {
       type: ProductType.ELECTRO,
@@ -35,7 +35,7 @@ export function getProducts() {
       description: "Guitar to test for our customers",
       photo: THIRD_PHOTO,
       stringsCount: 12,
-      price: 100000,
+      price: 13880,
     }
   ];
 }

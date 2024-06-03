@@ -1,15 +1,9 @@
 openapi: 3.0.0
 paths:
-  /:
-    get:
-      operationId: AppController_getHello
-      parameters: []
-      responses:
-        "200":
-          description: ""
   /users/register:
     post:
       operationId: UserController_create
+      summary: Register new user
       parameters: []
       requestBody:
         required: true
@@ -25,12 +19,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/UserRDO"
         "409":
-          description: User already exists
+          description: User with passed email already exists
       tags: &a1
         - users
   /users/login:
     post:
       operationId: UserController_login
+      summary: Login user by passed credentials
       parameters: []
       requestBody:
         required: true
@@ -51,16 +46,22 @@ paths:
   /users/check:
     post:
       operationId: UserController_checkToken
+      summary: Check user`s JWT-Token
       parameters: []
       responses:
         "201":
           description: ""
       tags: *a1
-  /users:
-    post:
+  /users/{userId}:
+    get:
       operationId: UserController_show
       summary: Get detail info about user
-      parameters: []
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
       responses:
         "200":
           description: User found
@@ -71,9 +72,9 @@ paths:
         "404":
           description: User not found
       tags: *a1
-  /users/{userId}:
     delete:
       operationId: UserController_deleteUser
+      summary: Delete user
       parameters:
         - name: userId
           required: true
@@ -122,7 +123,7 @@ paths:
           required: false
           in: query
           description: "Sorting direction. Default direction: asc"
-          example: " Pdesc"
+          example: " desc"
           schema:
             enum:
               - asc
@@ -169,6 +170,17 @@ paths:
               - 7
               - 12
             type: number
+        - name: type
+          required: false
+          in: query
+          description: Product type  (or types array)
+          example: electro
+          schema:
+            enum:
+              - electro
+              - acoustic
+              - ukulele
+            type: string
         - name: title
           required: false
           in: query

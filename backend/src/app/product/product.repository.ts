@@ -1,12 +1,15 @@
 import { BasePostgresRepository } from '@backend/libs/data-access';
-import { Injectable } from '@nestjs/common';
-import { ProductEntity } from './product.entity';
 import { ProductInterface } from '@backend/libs/interfaces';
-import { ProductFactory } from './product.factory';
-import { PrismaClientService } from '../prisma-client/prisma-client.service';
-import { PaginationResult, SearchFilters, SearchQuery, SortDirectionEnum, SortType, SortTypeEnum } from '@backend/libs/types';
-import { DEFAULT_SORT_DIRECTION, DEFAULT_SORT_TYPE, MAX_ITEMS_PER_PAGE } from './product.constant';
+import { PaginationResult, ProductTypeEnum } from '@backend/libs/types';
+import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { SearchFilters } from '@shared/product/types/search/search-filters';
+import { SearchQuery } from '@shared/product/types/search/search-query.type';
+import { SortDirectionEnum, SortType, SortTypeEnum } from '@shared/product/types/search/sort-type.enum';
+import { PrismaClientService } from '../prisma-client/prisma-client.service';
+import { DEFAULT_SORT_DIRECTION, DEFAULT_SORT_TYPE, MAX_ITEMS_PER_PAGE } from './product.constant';
+import { ProductEntity } from './product.entity';
+import { ProductFactory } from './product.factory';
 
 @Injectable()
 export class ProductRepository extends BasePostgresRepository<ProductEntity, ProductInterface> {
@@ -108,12 +111,24 @@ export class ProductRepository extends BasePostgresRepository<ProductEntity, Pro
 
     // Поиск по определенному типу
     if(query?.type) {
-      where.type = query.type;
+      if(!Array.isArray(query.type)) {
+        query.type = [query.type] as ProductTypeEnum[];
+      }
+
+      where.type = {
+        in: query.type as ProductTypeEnum[],
+      };
     }
 
     // Поиск по количеству струн
     if(query?.stringsCount) {
-      where.stringsCount = query.stringsCount;
+      if(!Array.isArray(query.stringsCount)) {
+        query.stringsCount = [query.stringsCount];
+      }
+
+      where.stringsCount = {
+        in: query.stringsCount,
+      };
     }
 
     // Сортировка и направление сортировки

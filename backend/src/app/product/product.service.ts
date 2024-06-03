@@ -1,10 +1,13 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { ProductRepository } from './product.repository';
-import { CreateProductDTO } from '@backend/product/dto/create-product.dto';
-import { ProductFactory } from './product.factory';
-import { UpdateProductDTO } from '@backend/product/dto/update-product.dto';
-import { SearchQuery } from '@backend/libs/types';
 import { fillDTO, omitUndefined } from '@backend/libs/helpers';
+import {  SearchQuery } from '@shared/product/types/search/search-query.type';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+
+import { CreateProductDTO } from '@shared/product/dto/create-product.dto';
+import { UpdateProductDTO } from '@shared/product/dto/update-product.dto';
+
+import { ProductFactory } from './product.factory';
+import { ProductRepository } from './product.repository';
+
 
 
 @Injectable()

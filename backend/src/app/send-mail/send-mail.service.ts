@@ -3,9 +3,9 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 
 
-import { EMAIL_NEW_USER } from './send-mail.constant';
 import { smtpConfig } from '../../config';
 import { UserInterface } from '../libs/interfaces';
+import { EMAIL_NEW_USER } from './send-mail.constant';
 
 @Injectable()
 export class SendMailService {

@@ -1,11 +1,13 @@
+#!/usr/bin/env ts-node
+
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
 import { ConfigService } from '@nestjs/config';
+import { PrismaClient } from '@prisma/client';
 import { Command } from 'commander';
 
 import { ConfigEnvironment } from 'backend/src/config';
-import { MongoDatabaseClient } from './database-client/mongo.database-client';
 import { UserSchema } from '../user/user.model';
+import { MongoDatabaseClient } from './database-client/mongo.database-client';
 
 import { BCryptHasher, getMongoConnectionString } from '../libs/helpers';
 import { getMockAdmin, getMockProduct } from './mock/mock.data';
@@ -34,13 +36,14 @@ export class CLIService {
 
   public execute() {
     this.logger.log(`🚀 CLI Application is executing`);
-    this.program.parse(process.argv.slice(2));
+    this.program.parse(process.argv);
   }
 
   private registerCommands() {
     this.program
       .name('GuitarShopCLI')
       .description('CLI service to generate mock data and fill database')
+      .passThroughOptions()
 
     this.registerHelpCommand();
     this.registerGenerateCommand();
@@ -49,29 +52,44 @@ export class CLIService {
   private registerHelpCommand() {
     this.program
       .command('--help', { isDefault: true })
+      .alias('help')
       .description('Displays availible CLI commands list')
       .action(() => {
-        this.logger.log('Running "Help" command no arguments passed to CLI');
+        this.logger.log('Running "Help" command ...');
+
         this.program.outputHelp();
       });
+
+    this.logger.log('📃 Command "--help" registered');
   }
 
   private async registerGenerateCommand() {
     this.program
       .command('--generate')
+      .alias('generate')
       .argument('<n>', 'generate items count')
       .argument('<dbConnectionString>', 'correct PostgreSQL connection string')
-      .action((itemsCount, connectionString) => {
-        // Insert Products
-        this.connectToPostgreSQL(connectionString);
-        this.insertProducts(itemsCount);
-        this.disconnectFromPostgreSQL();
+      .action(async (itemsCount, connectionString) => {
+        this.logger.log('Running "Generate" command ...');
 
         // Insert root user
         this.connectToMongoDB();
-        this.insertRootAdmin();
+        await this.insertRootAdmin();
         this.disconnectFromMongoDB();
-      })
+
+        itemsCount = parseInt(itemsCount, 10);
+
+        if(!itemsCount) {
+          this.program.error(`Generating items count must be an integer number. Passed: ${itemsCount}`);
+        }
+
+        // Insert Products
+        this.connectToPostgreSQL(connectionString);
+        await this.insertProducts(itemsCount);
+        this.disconnectFromPostgreSQL();
+      });
+
+    this.logger.log('📃 Command "--generate" registered');
   }
 
   private async insertRootAdmin() {
@@ -82,7 +100,7 @@ export class CLIService {
 
     const mongoDBConnection = this.mongoDBCLient.getConnection();
     const UserModel = mongoDBConnection.model('UserModel', UserSchema);
-    const isUserExists = UserModel.findOne({ email: rootUser.email }).exec();
+    const isUserExists = await UserModel.findOne({ email: rootUser.email }).exec();
 
     if(isUserExists) {
       this.logger.log(`⚠️ Root user with email ${rootUser.email} already exists`);

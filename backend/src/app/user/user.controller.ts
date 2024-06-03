@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, HttpStatus, Post, UseGuards, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { fillDTO } from '../libs/helpers';
@@ -9,15 +9,13 @@ import { RequestWithUser } from './interfaces/request-with-user.interface';
 import { UserMessage } from './user.constant';
 import { UserService } from './user.service';
 
-import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JWTAuthGuard } from './guards/jwt-auth.guard';
+import { LocalAuthGuard } from './guards/local-auth.guard';
 
-import { UserRDO } from './rdo/user.rdo';
-import { LoggedUserRDO } from './rdo/logged-user.rdo';
-import { LoginUserDTO } from './dto/login-user.dto';
-import { CreateUserDTO } from './dto/create-user.dto';
-
-
+import { CreateUserDTO } from '@shared/user/dto/create-user.dto';
+import { LoginUserDTO } from '@shared/user/dto/login-user.dto';
+import { LoggedUserRDO } from '@shared/user/rdo/logged-user.rdo';
+import { UserRDO } from '@shared/user/rdo/user.rdo';
 @ApiTags('users')
 @Controller('users')
 export class UserController {
@@ -27,6 +25,7 @@ export class UserController {
 
 
   @Post('register')
+  @ApiOperation({ summary: 'Register new user' })
   @ApiResponse({
     type: UserRDO,
     status: HttpStatus.CREATED,
@@ -43,6 +42,7 @@ export class UserController {
   }
 
   @Post('login')
+  @ApiOperation({ summary: 'Login user by passed credentials' })
   @UseGuards(LocalAuthGuard) // Верификация перенесена в гард через LocalStrategy
   @ApiResponse({
     type: UserRDO,
@@ -68,13 +68,15 @@ export class UserController {
   }
 
   @Post('check')
+  @ApiOperation({ summary: 'Check user`s JWT-Token' })
   @UseGuards(JWTAuthGuard)
   public async checkToken(@Req() { user: tokenPayload }: RequestWithUser) {
     return tokenPayload;
   }
 
-  @Post('/')
-  @ApiOperation({ summary: UserMessage.DESCRIPTION.USER_DETAIL })
+  @Get('/:userId')
+  @UseGuards(JWTAuthGuard)
+  @ApiOperation({ summary: 'Get detail info about user' })
   @ApiResponse({
     type: UserRDO,
     status: HttpStatus.OK,
@@ -84,13 +86,15 @@ export class UserController {
     status: HttpStatus.NOT_FOUND,
     description: UserMessage.ERROR.NOT_FOUND
   })
-  public async show(@Body('userId') userId: string): Promise<LoggedUserRDO> {
+  public async show(@Param('userId') userId: string): Promise<LoggedUserRDO> {
     const userDetail = await this.userService.getUserDetail(userId);
 
     return fillDTO(LoggedUserRDO, userDetail.toPOJO());
   }
 
   @Delete(':userId')
+  @UseGuards(JWTAuthGuard)
+  @ApiOperation({ summary: 'Delete user' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: UserMessage.SUCCESS.DELETED
